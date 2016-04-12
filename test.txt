@@ -1,0 +1,43 @@
+These days, there is nothing more important than keeping our phones connected to the Internet. From our mobile devices, we can do almost anything. The catch is the price and the availability of the networks. 3G and 4G data is expensive and runs out quickly.
+
+Most people see data as a mystical force that connects their devices to the greater Internet using some magical power. In reality, all data is doing is sending packets (a message meant for computers to read) to the data towers which forward it to the Internet. 
+So all mobile data does is send messages to a tower which then forward to some other device which then sends it to its intended destination.
+
+Sound familiar? I thought so. The 4G protocol treats everything as IP communication. All IP communication is is sending encoded messages. After I realized this, I started a project that allows me to connect my phone to the Internet only using text messages. Basically, I send packets over SMS to a server which forwards it to the Internet.
+
+The economics of this seem slightly skewed, but it checks out. It costs next to nothing for cell service providers to send millions of text messages,  but maintaining a 3G/4G uplink is relatively costly. This is definitely not a replacement for the normal high speed data we use, but it has its uses.
+
+
+In locations without data connections such as 3rd world countries this  could be an easy way to connect people to the Internet, without having to install heavy duty data towers. A lot of places have SMS but don’t have 3G or 4G  It would be a great option for companies and countries who don't have the money to install the 3G and 4G networks but still want to be able to connect people. It is very costly to install a whole new network, but to add a few servers is very, very cheap by comparison.
+
+Another option is for international travel. Because data is costly internationally but SMS is often significantly cheaper, this could be an option for frequent international travelers, allowing them to download a map or call an Uber. 
+
+Now for a little more of the technical details:
+
+I've been working on this project since September, and I am happy with the progress I've made. I've successfully been able to do some very light Internet communications, but that is mainly because of my limited resources (being a high school student). With a dedicated GSM Modem, the communication could go much, much faster. Currently, I'm using Twilio, which is a nice service, but is not geared for what I want. I only can send and receive one SMS a second, and have to use HTTP requests (a relatively slow protocol) to interface with SMS. It adds a second or two too each part of the process, which creates a significant lag. 
+
+
+
+My main idea is pretty simple. A normal data connection looks like this (From my presentation here): 
+
+Your Phone     < 3G/4G >  Cell Towers < In House Communication> Their servers < Ethernet > The internet  
+
+My Current Setup:
+
+My Phone < SMS >  Cell Towers < SMS > Twilio (SMS Gateway) <Ethernet>  My Server  (Running My Code)    <Ethernet  > The Internet  
+
+
+My Ideal Setup (If the program was running in sync with the SMS services): 
+
+My Phone      < SMS >  Cell Towers (Running my code)   < Ethernet > The internet
+		
+
+ At first, I thought this would be an easy application to build. Make an Android application to send the packets over SMS to my server, once it’s on the server do some simple packet forwarding, and then follow the same chain with the incoming packets.
+
+ In reality, this was much, much tougher. Android's Java, SMS, and P ython (my server-side language) all use different character sets which is cause for a huge pain. Also the way of dealing with raw data is very different in Python and Java added some additional application design. In Python, raw data is just stored in the string format which is ideal for my project.
+
+This caused a lot of data conversion that needed to be done. It was hard, but it was possible. After working on this since september, I can successfully forward TCP and UDP protocol communication just using SMS.
+
+Right now all the code is private on github, but i’d be glad to share with anyone who would like to see.
+
+If anyone has any questions, feel free to leave a comment.
