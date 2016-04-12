@@ -1,3 +1,5 @@
+SMS Internet
+
 These days, there is nothing more important than keeping our phones connected to the Internet. From our mobile devices, we can do almost anything. The catch is the price and the availability of the networks. 3G and 4G data is expensive and runs out quickly.
 
 Most people see data as a mystical force that connects their devices to the greater Internet using some magical power. In reality, all data is doing is sending packets (a message meant for computers to read) to the data towers which forward it to the Internet. 

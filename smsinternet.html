@@ -6,7 +6,62 @@
 	</HEAD>
 
 	<body>
+		<center>
 		<h1>
-			SMS Internet
+			SMS Internet: My plan to get free Internet
 		</h1>
+
+		<h4>
+		by Ryan Ehrlich
+		</h4>
+		<br>
+
+		<p>
+			These days, there is nothing more important than keeping our phones connected to the Internet. From our mobile devices, we can do almost anything. The catch is the price and the availability of the networks. 3G and 4G data is expensive and runs out quickly.
+
+			Most people see data as this mystical force that connects their devices to the greater Internet using some magical power.
+			In reality, all data is doing is sending packets (the way devices on the Internet communicate with each other) to the data towers which forward it to the Internet. 
+			<br>So all Mobile data is is sending messages to a tower which then forward to some other device which then does something else with it. 
+			<br>
+			Sound familiar? I thought so. The 3G/4G protocol is just a complicated SMS protocol. After I realized this, I started a project that allows me to connect my phone to the Internet only using text messages. The Economics of this seem slightly skewed, but it checks out. It costs next to nothing for Cell Service providers to send millions of Text messages. This is definitely not a replacement for the normal high speed data we use, but has its uses.
+
+
+			In locations with out data connections such as 3rd world countries this could be an easy way to connect people to the Internet, with out having to install heavy duty data towers. It would be a great option for companies and countries who don't have the money to install the 3g and 4G networks but still want to be able to connect people. It is very costly to install a whole new network, but to add a few servers is very, very cheap by comparison.
+
+			Another option is for international travel. Because data is costly internationally but SMS is free, this could be an option for frequent international travels, allowing them to download a map or call an uber. 
+
+			I've been working on this project since September, and i am happy with the progress I've made. I've successfully been able to do some very light Internet communications, but that is mainly because of my limited resources (being a high school student). With a dedicated GSM Modem, the communication could go much, much faster. Currently, I'm using Twilio, which is a nice service, but is not geared for what I want. I only can send and receive one SMS a second, and have to use HTTP requests (a relatively slow protocol) to interface with SMS. It adds a second or two too each part of the process, which can cause significant lag. 
+
+			Currently the code can send and receive elementary Internet data, mainly because of limitations i have (being a high school student).
+			
+
+			<br>
+
+			My Main idea is pretty simple. A normal data connection looks like this: <br><h3>
+
+			Your Phone <-- (3G/4G networks) --> Cell Tower <-- (Ethernet via the towers servers) --> The Internet <br><br>
+
+			</h3>
+			My Current Setup:
+
+			<h3>
+			My Phone <-- (SMS) -->  Cell Towers <-- (SMS) --> My Server <-- (Via Ethernet) --> Packets <br> <br>
+			</h3>
+
+			My Ideal Setup (If i can work with the Companies in charge of the data companies): <br>
+			<h3>
+			My Phone <-- (SMS) --> Cell Towers with servers that have my code <-- My program which can forward the packets --> Internet <br><br>
+			</h3>
+
+			<br> At first, I thought this would be an easy plug an chug. Make An android application to send the packets over SMS to my server, once its on the server do some simple packet forwarding, and then follow the same chain with the incoming packets.
+
+			<br> In Reality, this was much, much tougher. Androids' Java, SMS, and python (my server language) all use different character sets which is cause for a huge pain. Also the way dealing with raw data is very different in python and Java added some additional application design. In python, raw data is just stored in the string format which is ideal for my project.
+
+			This caused a lot of data conversion that needed to be done. It was hard, but it was possible. Right now, i can successfully forward TCP and UDP protocol communication just using SMS.
+
+			All the code is currently private on Github, but please let me know if anyone would like to see it.
+
+		</p>
+		</center>
 	</body>
+</html>
