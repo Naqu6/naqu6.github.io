@@ -42,4 +42,4 @@ This caused a lot of data conversion that needed to be done. It was hard, but it
 
 Right now all the code is private on github, but i’d be glad to share with anyone who would like to see.
 
-If anyone has any questions, feel free to leave a comment.
+If anyone has any questions, feel free to leave a comment. I'll be sure to reply. Thank you for reading
