@@ -2,6 +2,44 @@
 <html>
 	<head>
 	<script type="text/javascript">
+	function getInfo(switchOn) {
+		var value = 0;
+		var protienName = "";
+		console.error(switchOn);
+		switch (switchOn) {
+			case "AT":
+				return [20, "K"];
+
+			case "TA":
+				return [30,"4"];
+
+			case "GC":
+				return[-5, "S"];
+
+			case "CG":
+				return [25, "Q"];
+		}
+	}
+
+	function setLength(dna) {
+		var protienName = "";
+		var length = 0;
+		
+		var fromSwitch1 = getInfo(dna.substring(0,2));
+		var fromSwitch2 = getInfo(dna.substring(2,4));
+		var fromSwitch3 = getInfo(dna.substring(4,6));
+
+		length += fromSwitch1[0];
+		length += fromSwitch2[0];
+		length += fromSwitch3[0];
+
+		protienName += fromSwitch1[1];
+		protienName += fromSwitch2[1];
+		protienName += fromSwitch3[1]; 
+
+		return [length, protienName];
+	}
+
 	function animalChange() {
 		var dna = document.getElementById("dna").value;
 		var info = "";
@@ -12,171 +50,87 @@
 
 		context.clearRect(0, 0, canvas.width, canvas.height);
 
-		switch(values[0]) {
+		var protienName = "";
+
+		switch(values[0].substring(0,1)) {
 			case "AT":
 				context.fillStyle = "green";
-				info += "Amino Acid pair AT creates protien P2GC, which makes the Skin apear green <br>";
+				protienName += "D";
 				break;
 			case "TA":
 				context.fillStyle = "blue";
-				info += "Amino Acid pair TA creats Protien F96C, which makes the Skin Apear blue <br>";
+				protienName += "4";
 				break;
 			case "GC":
 				context.fillStyle = "red";
-				info += "Amino Acid pair GC creats Protien CJ78, which makes the Skin Appear red <br>";
+				protienName += "M";
 				break;
 			case "CG":
-				info += "Amnio Acid pair CG creats Protien Q58G, Which makes the Skin Appear yellow<br>";
+				context.fillStyle = "yellow";
+				protienName += "Y";
+				break;
+		}
+		switch(values[0].substring(2,3)) {
+			case "AT":
+				context.fillStyle = "green";
+				protienName += "5";
+				break;
+			case "TA":
+				context.fillStyle = "blue";
+				protienName += "1";
+				break;
+			case "GC":
+				context.fillStyle = "red";
+				protienName += "I";
+				break;
+			case "CG":
+				context.fillStyle = "yellow";
+				protienName += "L";
+				break;
+		}
+		switch(values[0].substring(4,5)) {
+			case "AT":
+				context.fillStyle = "green";
+				info += "Amino Acid pair " + values[0] + " creates protien "+ protienName + "2, which makes the Skin apear green <br>";
+				break;
+			case "TA":
+				context.fillStyle = "blue";
+				info += "Amino Acid pair " + values[0] + " creats Protien "+ protienName + "M, which makes the Skin Apear blue <br>";
+				break;
+			case "GC":
+				context.fillStyle = "red";
+				info += "Amino Acid pair " + values[0] + " creats Protien "+ protienName + "Q, which makes the Skin Appear red <br>";
+				break;
+			case "CG":
+				info += "Amnio Acid pair " + values[0] + " creats Protien "+ protienName + "C, Which makes the Skin Appear yellow<br>";
 				context.fillStyle = "yellow";
 				break;
 		}
 
-		var headArg1 = 0;
+		var headSetValues = setLength(values[1]);
+		var headArg1 = headSetValues[0];
+
+		info += "Amino Acid Pair " + values[1] + " creates protien " + headSetValues[1] + " which makes the Head " + headSetValues[0] + " Centimeters big<br>";
+		
 		var headArg2 = 30;
 
-		var protienName = "";
+		var bodySetValues = setLength(values[2]);
+		var bodyLength = bodySetValues[0];
 
-		switch(values[1][0]) {
-			case "A":
-				protienName += "5";
-				headArg1 += 0;
-				break;
-			case "T":
-				protienName += "K";
-				headArg1 += 5;
-				break;
-			case "G":
-				protienName += "C";
-				headArg1 += 10;
-				break;
-			case "C":
-				protienName += "D";
-				headArg1 += 15;
-				break;
-		}
+		console.error(bodySetValues);
+
+		info += "Amino Acid Pair " + values[1] + " creates protien " + bodySetValues[1] + " which makes the arms " + bodySetValues[0] + " Centimeters big<br>";
+
+		var armSetValues = setLength(values[3]);
+		var armLength = armSetValues[0];
+
+		info += "Amino Acid Pair " + values[1] + " creates protien " + armSetValues[1] + " which makes the arms " + armSetValues[0] + " Centimeters big<br>";
 		
-		switch(values[1][1]) {
-			case "A":
-				protienName += "C";
-				headArg1 += 20;
-				break;
-			case "T":
-				protienName += "I"; 
-				headArg1 += 25;
-				break;
-			case "G":
-				protienName += "D";
-				headArg1 += 30;
-				break;
-			case "C":
-				protienName += "K";
-				headArg1 += 35;
-				break;
-		}
-		
-		switch(values[1][2]) {
-			case "A":
-				protienName += "V";
-				headArg1 += 40;
-				break;
-			case "T":
-				protienName += "5"; 
-				headArg1 += 45;
-				break;
-			case "G":
-				protienName += "N";
-				headArg1 += 50;
-				break;
-			case "C":
-				protienName += "2";
-				headArg1 += 0;
-				break;
-		}
+		var legSetValues = setLength(values[4]);
+		var legLength = legSetValues[0];
 
-		switch(values[1][3]) {
-			case "A":
-				protienName += "O";
-				headArg1 += 15;
-				break;
-			case "T":
-				protienName += "T";
-				headArg1 += 20;
-				break;
-			case "G":
-				protienName += "0";
-				headArg1 += 100;
-				break;
-			case "C":
-				protienName += "B";
-				headArg1 += 30;
-				break;
-		}
+		info += "Amino Acid Pair " + values[1] + " creates protien " + legSetValues[1] + " which makes the legs " + legSetValues[0] + " Centimeters big<br>";
 
-		info += "Amino Acid Pair " + values[1] + " folds into protien " + protienName + " causing the craninial bones to grow to be " + headArg1 + " centimeters bigger than usual <br>"; 
-
-		var bodyLength = 0;
-
-		switch(values[2]) {
-			case "AT":
-				bodyLength = 50;
-				info += "Amino Acid Pair AT folds into Protien UHG3 which causes the body to be 50 centimeters long<br>";
-				break;
-			case "TA":
-				info += "Amino Acid Pair TA folds into Protien BOP2 which causes the body to be 100 centimeters long<br>";
-				bodyLength = 100;
-				break;
-			case "GC":
-				info += "Amino Acid Pair GC folds into Protien DK92 which causes the body to be 25 centimeters long<br>";
-				bodyLength = 25;
-				break;
-			case "CG":
-				info += "Amino Acid Pair CG folds into Protien VY38 which causes the body to be 150 centimeters long<br>";
-				bodyLength = 150;
-				break;	
-		}
-		var armLength = 0;
-
-		switch(values[3]) {
-			case "AT":
-				armLength = 50;
-				info += "Amino Acid Pair AT folds into Protien UB57 which causes the arms to be 50 centimeters long <br>";
-				break;
-			case "TA":
-				armLength = 100;
-				info += "Amino Acid Pair TA folds into Protien B74C which causes the arms to be 100 centimeters long <br>";
-				break;
-			case "CG":
-				armLength = 25;
-				info += "Amino Acid Pair CG folds into Protien QW945 which causes the arms to be 25 centimeters long <br>";
-				break;
-			case "GC":
-				armLength = 35;
-				info += "Amino Acid Pair GC folds into Protien 95CLKG which causes the arms to be 35 centimeters long <br>";
-				break;
-		}
-
-		var legLength = 0;
-
-		switch(values[4]) {
-			case "AT":
-				legLength = 25;
-				info += "Amino Acid Pair AT folds into Protien YK59 which causes the legs to be 25 centimeters long <br>";
-				break;
-			case "TA":
-				legLength = 50;
-				info += "Amino Acid Pair TA folds into Protien DPU57 which causes the legs to be 50 centimeters long <br>";
-				break;
-			case "CG":
-				legLength = 75;
-
-				info += "Amino Acid Pair CG folds into Protien YAK which causes the legs to be 75 centimeters long <br>";
-				break;
-			case "GC":
-				legLength = 35;
-
-				info += "Amino Acid Pair GC folds into Protien FLK45 which causes the legs to be 35 centimeters long <br>";
-				break;
-		}
 
 		console.error(info);
 		console.error(document.getElementById("dnainfo").innerHTML);
@@ -228,7 +182,7 @@
 	<h1>
 		Build an Animal by changeing the Genetic Code!
 	</h1> <br>
-	<textarea id = "dna" onchange="animalChange()">CG-ATTA-TA-AT-GC</textarea>
+	<textarea id = "dna" onchange="animalChange()">CGCGAT-ATTAGC-TAGCAT-ATGCAT-GCATAT</textarea>
 	<br>
 	<p id = "dnainfo">
 	test
