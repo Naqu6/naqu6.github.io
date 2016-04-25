@@ -1,0 +1,133 @@
+<html>
+	<head>
+		<script type="text/javascript">
+			function generateGenotypes(allels) {
+				var genotypes = [];
+				var subGenotypes;
+
+				if (allels.length != 1) {
+					subGenotypes = generateGenotypes(allels.slice(1, allels.length));
+				} else {
+					subGenotypes = true;
+				}
+
+
+				for (var i = 0; i < allels[0].length; i++) {
+					if (subGenotypes == true) {
+						genotypes.push(allels[0][i]);
+					} else {
+						for (var j = 0; j<subGenotypes.length; j++) {
+							genotypes.push(allels[0][i] + subGenotypes[j]);
+						}
+					}
+				}
+				
+				return genotypes;
+			}
+
+			function splitTraits(traits) {
+				var allels = [];
+				var description = [];
+
+				for (var i = 0; i<traits.length; i++) {
+					var alleleTempData = [];
+					var descriptionTempData = [];
+					var genotypeData = traits[i].split(",");
+					
+					for (var j = 0; j < genotypeData.length; j++) {
+						alleleTempData.push(genotypeData[j][0]);
+						descriptionTempData.push(genotypeData[j].substring(2, genotypeData[j].length));
+					}
+
+					allels.push(alleleTempData);
+					
+					description.push(descriptionTempData);
+				}
+
+				return [allels, description];
+			}
+
+			function updatesTable() {
+				var trait = document.getElementById("trait").value.split("\n");
+
+				var data = splitTraits(trait);
+
+				var allels = data[0];
+				var descriptions = data[1];
+
+				var genotypes = generateGenotypes(allels);
+				
+
+				console.log(genotypes);
+
+
+				var table = document.createElement("TABLE");
+
+				var firstRow = table.insertRow(0);
+				firstRow.insertCell(0);
+
+
+				var infoDict = {};
+
+				var possibleGenes = []
+
+				for (var i = 0; i < genotypes.length; i++) {
+					var cell = firstRow.insertCell(i+1);
+					cell.innerHTML = genotypes[i];
+				}
+
+				for (var i = 0; i < genotypes.length; i++) {
+					var row = table.insertRow(i+1);
+					var genotype = row.insertCell(0);
+					genotype.innerHTML = genotypes[i];
+
+					for (var j = 0; j< genotypes.length; j++) {
+						var cell = row.insertCell(j+1);
+						var data = "";
+
+						for (var k = 0; k < allels.length; k++) {
+							var gene = genotypes[i][k] + genotypes[j][k];
+							console.log(gene);
+							if (gene[0].toLowerCase() == gene[0] && gene[1].toUpperCase() == gene[1]) {
+								gene = gene[1] + gene[0]
+
+							}
+
+							data += gene;
+						}
+						possibleGenes.push(data);
+						if (!(data in infoDict)) {
+								infoDict[data] = 0;
+							}
+							
+							infoDict[data] += 1;
+
+						cell.innerHTML = data;
+					}
+				}
+				document.getElementById("data").innerHTML = "";
+
+				var genoInfo = "Genotype information:\n";
+
+				for (var i = 0; i < possibleGenes.length; i++) {
+					genoInfo += "Genotype " + possibleGenes[i] + " " + infoDict[possibleGenes[i]] + "/" + genotypes.length * genotypes.length + "<br>"; 
+				}
+
+				document.getElementById("data").appendChild(table);
+				console.log(genoInfo);
+				document.getElementById("genoTypeData").innerHTML = genoInfo;
+			}
+		</script>
+	</head>
+	<body>
+		<p> Enter any number of traits, sepearted by returns</p>
+		<textarea id="trait">H:Tall,h:short</textarea>
+		<br>
+		<button onclick="updatesTable()">Generate the Data!</button>
+		<div id='data'>
+		</div>
+		<p id = "genoTypeData"> 
+		</p>
+
+	</body>
+</html>
