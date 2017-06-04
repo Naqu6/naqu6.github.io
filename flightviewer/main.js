@@ -10,31 +10,61 @@ var StartTime;
 var EndTime;
 
 var manuvers = {
-	straightAndLevel: function(positions) {
+	straightAndLevel: function(data) {
 
-	}, climb: function(positions) {
+	}, climb: function(data) {
 
-	}, climbingTurn: function(positions) {
+	}, climbingTurn: function(data) {
 
-	}, descend: function(positions) {
+	}, descend: function(data) {
 
-	}, descendingTurn: function(positions) {
+	}, descendingTurn: function(data) {
 
-	}, landingApproach: function(positions) {
+	}, landingApproach: function(data) {
 
-	}, turnsAroundAPoint: function(positions) {
+	}, turnsAroundAPoint: function(data) {
 
-	}, STurns: function(positions) {
+		totalDistance = 0.0;
 
-	}, rectCourse: function(positions) {
+		for (var position in positions) {
+			totalDistance += Cesium.Cartesian3.distance(data.averagePosition, position);
+		}
+
+		averageDistance = totalDistance/positions.length;
+
+		viewer.entities.add({
+		    position: data.averagePosition,
+		    name: 'Target Course',
+		    ellipse: {
+		        semiMinorAxis : averageDistance,
+		        semiMajorAxis : averageDistance,
+		        material : Cesium.Color.BLUE.withAlpha(0.5),
+		        outline : true
+		    }
+		});
+
+		var redPolygon = viewer.entities.add({
+		    name: 'Actual Course',
+		    polygon: {
+		        hierarchy: data.positions,
+		        material: Cesium.Color.RED
+		    }
+		});
+
+
+
+
+	}, STurns: function(data) {
+
+	}, rectCourse: function(data) {
 
 	}
 }
 
-// temporary varibles 
+// temporary variables 
 data = [];
 
-// Setup Inital KML LOAD
+// Setup Initial KML LOAD
 $(".loadKML").on("click", function() {
 
 	// Set the data source
@@ -95,6 +125,17 @@ function getPositionData(entity, startTime, endTime) { // Dont use global startT
 	return data;
 }
 
+function tracePath(positions) {
+	viewer.entities.add({
+	    name : 'Trace of Path',
+	    polyline : {
+	        positions : positions,
+	        width : 5,
+	        material : Cesium.Color.RED
+	    }
+	});
+}
+
 $(".setStartTime").on("click", function() {
 	StartTime = viewer.clock.currentTime;
 });
@@ -105,15 +146,6 @@ $(".setEndTime").on("click", function() {
 
 $(".setManeuver").on("click", function() {
 	data = getPositionData(flight, StartTime, EndTime);
-	    viewer.entities.add({
-        position : data.averagePosition,
-        label : {
-            text : 'Average Position',
-            font : '24px Helvetica',
-            fillColor : Cesium.Color.SKYBLUE,
-            outlineColor : Cesium.Color.BLACK,
-            outlineWidth : 2,
-            style : Cesium.LabelStyle.FILL_AND_OUTLINE
-        }
-    });
+    
+    manuvers.turnsAroundAPoint(data);
 });
