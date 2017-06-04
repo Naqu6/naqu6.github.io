@@ -11,6 +11,10 @@ var EndTime;
 
 var manuvers = {
 	straightAndLevel: function(data) {
+		initalPosition = data.positions[0];
+		finalPosition = data.positions[data.positions.length-1];
+
+
 
 	}, climb: function(data) {
 
@@ -26,11 +30,11 @@ var manuvers = {
 
 		totalDistance = 0.0;
 
-		for (var position in positions) {
+		for (var position in data.positions) {
 			totalDistance += Cesium.Cartesian3.distance(data.averagePosition, position);
 		}
 
-		averageDistance = totalDistance/positions.length;
+		averageDistance = totalDistance/data.positions.length;
 
 		viewer.entities.add({
 		    position: data.averagePosition,
