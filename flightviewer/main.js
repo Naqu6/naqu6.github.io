@@ -14,10 +14,10 @@ var manuvers = {
 		initalPosition = data.positions[0].clone();
 		finalPosition = data.positions[data.positions.length-1].clone();
 
-		averageAlt = (initalPosition.y + finalPosition.y)/2;
+		averageAlt = (initalPosition.z + finalPosition.z)/2;
 
-		initalPosition.y = averageAlt
-		finalPosition.y = averageAlt;
+		initalPosition.z = averageAlt
+		finalPosition.z = averageAlt;
 
 		targetLine = viewer.entities.add({
 		    name : 'Target Course',
