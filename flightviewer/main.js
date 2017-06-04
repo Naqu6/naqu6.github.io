@@ -36,7 +36,7 @@ var manuvers = {
 
 		averageDistance = totalDistance/data.positions.length;
 
-		viewer.entities.add({
+		var targetCourse = viewer.entities.add({
 		    position: data.averagePosition,
 		    name: 'Target Course',
 		    ellipse: {
@@ -47,7 +47,7 @@ var manuvers = {
 		    }
 		});
 
-		viewer.entities.add({
+		var actualCourse = viewer.entities.add({
 		    name: 'Actual Course',
 		    polygon: {
 		        hierarchy: data.positions,
@@ -55,7 +55,13 @@ var manuvers = {
 		    }
 		});
 
+		$(".toggleRealCourse").on("click", function() {
+			actualCourse.show = !actualCourse.show;
+		});
 
+		$(".toggleTargetCourse").on("click", function() {
+			targetCourse.show = !targetCourse.show;
+		});
 
 
 	}, STurns: function(data) {
@@ -139,6 +145,10 @@ function tracePath(positions) {
 	    }
 	});
 }
+
+$(".toggleFlightPath").on("click", function() {
+	flight.show = !flight.show;
+})
 
 $(".setStartTime").on("click", function() {
 	StartTime = viewer.clock.currentTime;
