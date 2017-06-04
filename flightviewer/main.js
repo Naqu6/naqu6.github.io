@@ -14,10 +14,10 @@ var manuvers = {
 		initalPosition = data.positions[0].clone();
 		finalPosition = data.positions[data.positions.length-1].clone();
 
-		averageAlt = (initalPosition.z + finalPosition.z)/2;
+		averageAlt = (initalPosition.y + finalPosition.y)/2;
 
-		initalPosition.z = averageAlt
-		finalPosition.z = averageAlt;
+		initalPosition.y = averageAlt
+		finalPosition.y = averageAlt;
 
 		targetLine = viewer.entities.add({
 		    name : 'Target Course',
@@ -29,12 +29,20 @@ var manuvers = {
 		});
 
 		actualCourse = viewer.entities.add({
-		    name : 'Target Course',
+		    name : 'Actual Course',
 		    polyline: {
 		        positions: data.positions,
 		        width: 5,
-		        material: Cesium.Color.BLUE
+		        material: Cesium.Color.RED
 		    }
+		});
+
+		$(".toggleRealCourse").on("click", function() {
+			actualCourse.show = !actualCourse.show;
+		});
+
+		$(".toggleTargetCourse").on("click", function() {
+			targetCourse.show = !targetCourse.show;
 		});
 
 	}, climb: function(data) {
