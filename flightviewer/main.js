@@ -68,31 +68,29 @@ function getPositionData(entity, startTime, endTime) { // Dont use global startT
 
 	var secondsIncrease = delta/NUMBER_OF_POINTS;
 
+	var x_total = 0;
+	var y_total = 0;
+	var z_total = 0;
+
 
 	while (endTime.dayNumber > time.dayNumber || endTime.secondsOfDay >= time.secondsOfDay) { // Cesium.Compare() doesn't work as intended, using custom evaluation
 		currentPosition = entityPosition.getValue(time);
 
 		data.positions.push(currentPosition);
 
-		time.secondsOfDay += secondsIncrease;
+		x_total += currentPosition.x;
+		y_total += currentPosition.y;
+		z_total += currentPosition.z;
 
-		if (data.average === undefined) {
-			data.average = {
-				x: currentPosition.x,
-				y: currentPosition.y,
-				z: currentPosition.z
-			}
-		} else {
-			data.average.x = (data.average.x + currentPosition.x)/2;
-			data.average.y = (data.average.y + currentPosition.y)/2;
-			data.average.z = (data.average.z + currentPosition.z)/2;
-		}
+		time.secondsOfDay += secondsIncrease;
 
 		if (time.secondsOfDay > NUMBER_OF_SECONDS_IN_DAY) {
 			time.dayNumber += 1;
 			time.secondsOfDay -= NUMBER_OF_SECONDS_IN_DAY;
 		}
 	}
+
+	data.averagePosition = new Cesium.Cartesian3(x_total/data.positions.length, y_total/data.positions.length, z_total/data.positions.length);
 
 	return data;
 }
@@ -108,7 +106,7 @@ $(".setEndTime").on("click", function() {
 $(".setManeuver").on("click", function() {
 	data = getPositionData(flight, StartTime, EndTime);
 	    viewer.entities.add({
-        position : Cesium.Cartesian3(data.average.x, data.average.y, data.average.z),
+        position : data.averagePosition,
         label : {
             text : 'Average Position',
             font : '24px Helvetica',
