@@ -1,4 +1,4 @@
-var NUMBER_OF_POINTS = 1000.0;
+var NUMBER_OF_POINTS = 1000.0; // This should be 2 lower than you want it 
 var NUMBER_OF_SECONDS_IN_DAY = 86400.0;
 
 // Set Cesium Key and Viewer
@@ -9,8 +9,24 @@ var flight;
 var StartTime;
 var EndTime;
 
+var manuvers = {
+	straightAndLevel: function(positions) {
+
+	}, climb: function(positions) {
+
+	}, climbingTurn: function(positions) {
+
+	}, descend: function(positions) {
+
+	}, descendingTurn: function(positions) {
+
+	}, turnsAroundAPoint: function(positions) {
+
+	}
+}
+
 // temporary varibles 
-positions = [];
+data = [];
 
 // Setup Inital KML LOAD
 $(".loadKML").on("click", function() {
@@ -30,10 +46,12 @@ $(".loadKML").on("click", function() {
 	});
 });
 
-function getAllPoints(entity, startTime, endTime) { // Dont use global startTime and endTime 
+function getPositionData(entity, startTime, endTime) { // Dont use global startTime and endTime 
 	var entityPosition = entity.position;
 
-	var positions = [entityPosition.getValue(startTime)];
+	var data = [];
+
+
 
 	var time = Cesium.JulianDate.clone(startTime);
 
@@ -46,16 +64,18 @@ function getAllPoints(entity, startTime, endTime) { // Dont use global startTime
 
 
 	while (endTime.dayNumber > time.dayNumber || endTime.secondsOfDay >= time.secondsOfDay) { // Cesium.Compare doesn't work as intended, using custom evaluation
+
+		data.push(entityPosition.getValue(time));
+
 		time.secondsOfDay += secondsIncrease;
 
 		if (time.secondsOfDay > NUMBER_OF_SECONDS_IN_DAY) {
 			time.dayNumber += 1;
 			time.secondsOfDay -= NUMBER_OF_SECONDS_IN_DAY;
 		}
-		positions.push(entityPosition.getValue(time));
 	}
 
-	return positions;
+	return data;
 }
 
 $(".setStartTime").on("click", function() {
@@ -67,5 +87,5 @@ $(".setEndTime").on("click", function() {
 });
 
 $(".setManeuver").on("click", function() {
-	positions = getAllPoints(flight, StartTime, EndTime);
+	data = getAllPoints(flight, StartTime, EndTime);
 });
