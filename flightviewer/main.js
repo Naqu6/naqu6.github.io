@@ -30,8 +30,8 @@ var manuvers = {
 
 		totalDistance = 0.0;
 
-		for (var position in data.positions) {
-			totalDistance += Cesium.Cartesian3.distance(data.averagePosition, position);
+		for (var i = 0; i < data.positions.length; i++) {
+			totalDistance += Cesium.Cartesian3.distance(data.averagePosition, data.positions[i]);
 		}
 
 		averageDistance = totalDistance/data.positions.length;
