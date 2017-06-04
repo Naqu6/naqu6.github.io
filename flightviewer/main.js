@@ -1,4 +1,4 @@
-var NUMBER_OF_POINTS = 1000.0; // Acurate within 1 point
+var NUMBER_OF_POINTS = 500.0; // Accurate within 1 point
 var NUMBER_OF_SECONDS_IN_DAY = 86400.0;
 
 // Set Cesium Key and Viewer
@@ -9,29 +9,13 @@ var flight;
 var StartTime;
 var EndTime;
 
-function drawLineToGround(point) {
+function getGroundPosition(point) {
 	var cartoCoords = Cesium.Ellipsoid.WGS84.cartesianToCartographic(point);
 	cartoCoords.height = 0;
 
 	cartesianPoint = Cesium.Ellipsoid.WGS84.cartographicToCartesian(cartoCoords);
 
-	var line = viewer.entities.add({
-	    name : 'Line to Ground',
-	    polyline : {
-	        positions : [point, cartesianPoint],
-	        width : 3,
-	        material : Cesium.Color.BLUE
-	    }
-	});
-
-	line.ellipse = material = new Cesium.GridMaterialProperty({
-		color : Cesium.Color.BLUE,
-		cellAlpha : 0.2,
-		lineCount : new Cesium.Cartesian2(8, 8),
-		lineThickness : new Cesium.Cartesian2(2.0, 2.0)
-	});
-
-	return line;
+	return cartesianPoint;
 }
 
 function toggleVisibilityOfElementsInArray(array) {
@@ -68,24 +52,56 @@ var manuvers = {
 		    }
 		});
 
-		targetCourseLines = [drawLineToGround(initalPosition), drawLineToGround(finalPosition)];
-		actualCourseLines = [];
+		targetCoursePositions = [initalPosition, finalPosition, getGroundPosition(initalPosition), getGroundPosition(finalPosition)];
+		actualCoursePositions = data.positions.slice(0);
 
 		for (var i = 0; i<data.positions.length; i++) {
-			actualCourseLines.push(drawLineToGround(data.positions[i]));
+			actualCourseLines.push(getGroundPosition(data.positions[i]));
 		}
+
+		actualCourseGroundLine = viewer.entities.add({
+			name: 'Actual Course Height',
+			polyline: {
+				positions: actualCoursePositions,
+				width: 5,
+				material: Cesium.Color.BLUE.withAlpha(0.1)
+			}
+		});
+
+		actualCourseGroundLine.ellipse.material = new Cesium.GridMaterialProperty({
+			color : Cesium.Color.BLUE,
+			cellAlpha : 0.2,
+			lineCount : new Cesium.Cartesian2(8, 8),
+			lineThickness : new Cesium.Cartesian2(2.0, 2.0)
+		});
+
+		targetCourseGroundLine = viewer.entities.add({
+			name: 'Actual Course Height',
+			polyline: {
+				positions: targetCoursePositions,
+				width: 5,
+				material: Cesium.Color.RED.withAlpha(0.1)
+			}
+		});
+
+		targetCourseGroundLine.ellipse.material = new Cesium.GridMaterialProperty({
+			color : Cesium.Color.RED,
+			cellAlpha : 0.1,
+			lineCount : new Cesium.Cartesian2(8, 8),
+			lineThickness : new Cesium.Cartesian2(2.0, 2.0)
+		});
 
 
 		$(".toggleRealCourse").on("click", function() {
 			actualCourse.show = !actualCourse.show;
 
-			toggleVisibilityOfElementsInArray(actualCourseLines);
+			actualCourseGroundLine.Ellipsoid.show = !actualCourseGroundLine.show
 		});
 
 		$(".toggleTargetCourse").on("click", function() {
 			targetCourse.show = !targetCourse.show;
 
-			toggleVisibilityOfElementsInArray(targetCourseLines);
+			targetCourseGroundLine.Ellipsoid.show = !targetCourseGroundLine.show
 		});
 
 	}, climb: function(data) {
