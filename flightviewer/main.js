@@ -56,7 +56,7 @@ var manuvers = {
 		actualCoursePositions = data.positions.slice(0);
 
 		for (var i = 0; i<data.positions.length; i++) {
-			actualCourseLines.push(getGroundPosition(data.positions[i]));
+			actualCoursePositions.push(getGroundPosition(data.positions[i]));
 		}
 
 		actualCourseGroundLine = viewer.entities.add({
