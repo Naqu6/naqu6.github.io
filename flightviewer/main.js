@@ -20,7 +20,13 @@ var manuvers = {
 
 	}, descendingTurn: function(positions) {
 
+	}, landingApproach: function(positions) {
+
 	}, turnsAroundAPoint: function(positions) {
+
+	}, STurns: function(positions) {
+
+	}, rectCourse: function(positions) {
 
 	}
 }
@@ -49,9 +55,9 @@ $(".loadKML").on("click", function() {
 function getPositionData(entity, startTime, endTime) { // Dont use global startTime and endTime 
 	var entityPosition = entity.position;
 
-	var data = [];
-
-
+	var data = {
+		positions: [],
+	};
 
 	var time = Cesium.JulianDate.clone(startTime);
 
@@ -63,11 +69,24 @@ function getPositionData(entity, startTime, endTime) { // Dont use global startT
 	var secondsIncrease = delta/NUMBER_OF_POINTS;
 
 
-	while (endTime.dayNumber > time.dayNumber || endTime.secondsOfDay >= time.secondsOfDay) { // Cesium.Compare doesn't work as intended, using custom evaluation
+	while (endTime.dayNumber > time.dayNumber || endTime.secondsOfDay >= time.secondsOfDay) { // Cesium.Compare() doesn't work as intended, using custom evaluation
+		currentPosition = entityPosition.getValue(time);
 
-		data.push(entityPosition.getValue(time));
+		data.positions.push(currentPosition);
 
 		time.secondsOfDay += secondsIncrease;
+
+		if (data.average === undefined) {
+			data.average = {
+				x: currentPosition.x,
+				y: currentPosition.y,
+				z: currentPosition.z
+			}
+		} else {
+			data.average.x = (data.average.x + currentPosition.x)/2;
+			data.average.y = (data.average.y + currentPosition.y)/2;
+			data.average.z = (data.average.z + currentPosition.z)/2;
+		}
 
 		if (time.secondsOfDay > NUMBER_OF_SECONDS_IN_DAY) {
 			time.dayNumber += 1;
@@ -87,5 +106,16 @@ $(".setEndTime").on("click", function() {
 });
 
 $(".setManeuver").on("click", function() {
-	data = getAllPoints(flight, StartTime, EndTime);
+	data = getPositionData(flight, StartTime, EndTime);
+	    viewer.entities.add({
+        position : Cesium.Cartesian3(data.average.x, data.average.y, data.average.z),
+        label : {
+            text : 'Average Position',
+            font : '24px Helvetica',
+            fillColor : Cesium.Color.SKYBLUE,
+            outlineColor : Cesium.Color.BLACK,
+            outlineWidth : 2,
+            style : Cesium.LabelStyle.FILL_AND_OUTLINE
+        }
+    });
 });
