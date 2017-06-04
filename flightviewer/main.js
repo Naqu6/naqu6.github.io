@@ -62,19 +62,19 @@ var manuvers = {
 
 		actualCourseGroundLine = viewer.entities.add({
 			name: 'Actual Course Height',
-			polyline: {
+			polygon: {
 				positions: actualCoursePositions,
 				width: 5,
-				material: Cesium.Color.BLUE.withAlpha(0.4)
+				material: Cesium.Color.RED.withAlpha(0.4)
 			}
 		});
 
 		targetCourseGroundLine = viewer.entities.add({
 			name: 'Actual Course Height',
-			polyline: {
+			polygon: {
 				positions: targetCoursePositions,
 				width: 5,
-				material: Cesium.Color.RED.withAlpha(0.4)
+				material: Cesium.Color.BLUE.withAlpha(0.4)
 			}
 		});
 
@@ -83,13 +83,13 @@ var manuvers = {
 		$(".toggleRealCourse").on("click", function() {
 			actualCourse.show = !actualCourse.show;
 
-			actualCourseGroundLine.Ellipsoid.show = !actualCourseGroundLine.show
+			actualCourseGroundLine.show = !actualCourseGroundLine.show
 		});
 
 		$(".toggleTargetCourse").on("click", function() {
 			targetCourse.show = !targetCourse.show;
 
-			targetCourseGroundLine.Ellipsoid.show = !targetCourseGroundLine.show
+			targetCourseGroundLine.show = !targetCourseGroundLine.show
 		});
 
 	}, climb: function(data) {
