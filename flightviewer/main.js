@@ -47,11 +47,11 @@ var manuvers = {
 		    }
 		});
 
-		var redPolygon = viewer.entities.add({
+		viewer.entities.add({
 		    name: 'Actual Course',
 		    polygon: {
 		        hierarchy: data.positions,
-		        material: Cesium.Color.RED
+		        material: Cesium.Color.RED.withAlpha(0.5),
 		    }
 		});
 
