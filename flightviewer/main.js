@@ -1,4 +1,4 @@
-var NUMBER_OF_POINTS = 1000.0; // This should be 2 lower than you want it 
+var NUMBER_OF_POINTS = 1000.0; // Acurate within 1 point
 var NUMBER_OF_SECONDS_IN_DAY = 86400.0;
 
 // Set Cesium Key and Viewer
@@ -9,17 +9,48 @@ var flight;
 var StartTime;
 var EndTime;
 
+function drawLineToGround(point) {
+	var cartoCoords = Cesium.Ellipsoid.WGS84.cartesianToCartographic(point);
+	cartoCoords.height = 0;
+
+	cartesianPoint = Cesium.Ellipsoid.WGS84.cartographicToCartesian(cartoCoords);
+
+	var line = viewer.entities.add({
+	    name : 'Line to Ground',
+	    polyline : {
+	        positions : [point, cartesianPoint],
+	        width : 3,
+	        material : Cesium.Color.BLUE
+	    }
+	});
+
+	line.ellipse = material = new Cesium.GridMaterialProperty({
+		color : Cesium.Color.BLUE,
+		cellAlpha : 0.2,
+		lineCount : new Cesium.Cartesian2(8, 8),
+		lineThickness : new Cesium.Cartesian2(2.0, 2.0)
+	});
+
+	return line;
+}
+
+function toggleVisibilityOfElementsInArray(array) {
+	for (var i = 0; i<array.length; i++) {
+		array[i].show = !array[i].show;
+	}
+}
+
 var manuvers = {
 	straightAndLevel: function(data) {
 		initalPosition = data.positions[0].clone();
 		finalPosition = data.positions[data.positions.length-1].clone();
 
-		averageAlt = (initalPosition.z + finalPosition.z)/2;
+		// averageAlt = (initalPosition.z + finalPosition.z)/2;
 
-		initalPosition.z = averageAlt
-		finalPosition.z = averageAlt;
+		// initalPosition.z = averageAlt
+		// finalPosition.z = averageAlt;
 
-		targetLine = viewer.entities.add({
+		targetCourse = viewer.entities.add({
 		    name : 'Target Course',
 		    polyline : {
 		        positions : [initalPosition, finalPosition],
@@ -37,33 +68,43 @@ var manuvers = {
 		    }
 		});
 
+		targetCourseLines = [drawLineToGround(initalPosition), drawLineToGround(finalPosition)];
+		actualCourseLines = [];
+
+		for (var i = 0; i<data.positions.length; i++) {
+			actualCourseLines.push(drawLineToGround(data.positions[i]));
+		}
+
+
 		$(".toggleRealCourse").on("click", function() {
 			actualCourse.show = !actualCourse.show;
+
+			toggleVisibilityOfElementsInArray(actualCourseLines);
 		});
 
 		$(".toggleTargetCourse").on("click", function() {
 			targetCourse.show = !targetCourse.show;
+
+			toggleVisibilityOfElementsInArray(targetCourseLines);
 		});
 
 	}, climb: function(data) {
 
-	}, climbingTurn: function(data) {
-
 	}, descend: function(data) {
-
-	}, descendingTurn: function(data) {
 
 	}, landingApproach: function(data) {
 
+
+
 	}, turnsAroundAPoint: function(data) {
 
-		totalDistance = 0.0;
+		var totalDistance = 0.0;
 
 		for (var i = 0; i < data.positions.length; i++) {
 			totalDistance += Cesium.Cartesian3.distance(data.averagePosition, data.positions[i]);
 		}
 
-		averageDistance = totalDistance/data.positions.length;
+		var averageDistance = totalDistance/data.positions.length;
 
 		var targetCourse = viewer.entities.add({
 		    position: data.averagePosition,
@@ -96,6 +137,33 @@ var manuvers = {
 	}, STurns: function(data) {
 
 	}, rectCourse: function(data) {
+
+		var targetCourse = viewer.entities.add({
+		    position: data.averagePosition,
+		    name: 'Target Course',
+		    ellipse: {
+		        semiMinorAxis : averageDistance,
+		        semiMajorAxis : averageDistance,
+		        material : Cesium.Color.BLUE.withAlpha(0.5),
+		        outline : true
+		    }
+		});
+
+		var actualCourse = viewer.entities.add({
+		    name: 'Actual Course',
+		    polygon: {
+		        hierarchy: data.positions,
+		        material: Cesium.Color.RED.withAlpha(0.5),
+		    }
+		});
+
+		$(".toggleRealCourse").on("click", function() {
+			actualCourse.show = !actualCourse.show;
+		});
+
+		$(".toggleTargetCourse").on("click", function() {
+			targetCourse.show = !targetCourse.show;
+		});
 
 	}
 }
