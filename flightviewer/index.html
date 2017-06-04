@@ -25,10 +25,15 @@ Upload KML: <input type="file" class="kmlFile">
 <button class="setEndTime">Stop Time</button>
 <button class="setManeuver">Grade Maneuver</button>
 <button class="toggleFlightPath"> Toggle Flight Path</button>
+
+<select class="selectManuver">
+    <option value="straightAndLevel">Straight and Level</option>
+    <option value="turnsAroundAPoint">Turns Around A Point</option>
+</select>
+
 <div id="cesiumContainer"></div>
 <script src="main.js"></script>
 
-<div class="turnsAroundAPointControls">
 <button class="toggleRealCourse"> Toggle Real Course </button>
 <button class="toggleTargetCourse"> Toggle Target Course </button>
 </div>

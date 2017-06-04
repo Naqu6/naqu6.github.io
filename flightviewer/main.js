@@ -11,10 +11,31 @@ var EndTime;
 
 var manuvers = {
 	straightAndLevel: function(data) {
-		initalPosition = data.positions[0];
-		finalPosition = data.positions[data.positions.length-1];
+		initalPosition = data.positions[0].clone();
+		finalPosition = data.positions[data.positions.length-1].clone();
 
+		averageAlt = (initalPosition.z + finalPosition.z)/2;
 
+		initalPosition.z = averageAlt
+		finalPosition.z = averageAlt;
+
+		targetLine = viewer.entities.add({
+		    name : 'Target Course',
+		    polyline : {
+		        positions : [initalPosition, finalPosition],
+		        width : 5,
+		        material : Cesium.Color.BLUE
+		    }
+		});
+
+		actualCourse = viewer.entities.add({
+		    name : 'Target Course',
+		    polyline: {
+		        positions: data.positions,
+		        width: 5,
+		        material: Cesium.Color.BLUE
+		    }
+		});
 
 	}, climb: function(data) {
 
@@ -161,5 +182,7 @@ $(".setEndTime").on("click", function() {
 $(".setManeuver").on("click", function() {
 	data = getPositionData(flight, StartTime, EndTime);
     
-    manuvers.turnsAroundAPoint(data);
+    var manuver = manuvers[$(".selectManuver").val()];
+
+    manuver();
 });
