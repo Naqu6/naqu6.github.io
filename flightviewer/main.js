@@ -52,10 +52,11 @@ var manuvers = {
 		    }
 		});
 
-		targetCoursePositions = [initalPosition, finalPosition, getGroundPosition(initalPosition), getGroundPosition(finalPosition)];
-		actualCoursePositions = data.positions.slice(0);
+		targetCoursePositions = [initalPosition, getGroundPosition(initalPosition), finalPosition, getGroundPosition(finalPosition)];
+		actualCoursePositions = [];
 
 		for (var i = 0; i<data.positions.length; i++) {
+			actualCoursePositions.push(data.positions[i]);
 			actualCoursePositions.push(getGroundPosition(data.positions[i]));
 		}
 
@@ -64,15 +65,8 @@ var manuvers = {
 			polyline: {
 				positions: actualCoursePositions,
 				width: 5,
-				material: Cesium.Color.BLUE.withAlpha(0.1)
+				material: Cesium.Color.BLUE.withAlpha(0.4)
 			}
-		});
-
-		actualCourseGroundLine.ellipse.material = new Cesium.GridMaterialProperty({
-			color : Cesium.Color.BLUE,
-			cellAlpha : 0.2,
-			lineCount : new Cesium.Cartesian2(8, 8),
-			lineThickness : new Cesium.Cartesian2(2.0, 2.0)
 		});
 
 		targetCourseGroundLine = viewer.entities.add({
@@ -80,16 +74,10 @@ var manuvers = {
 			polyline: {
 				positions: targetCoursePositions,
 				width: 5,
-				material: Cesium.Color.RED.withAlpha(0.1)
+				material: Cesium.Color.RED.withAlpha(0.4)
 			}
 		});
 
-		targetCourseGroundLine.ellipse.material = new Cesium.GridMaterialProperty({
-			color : Cesium.Color.RED,
-			cellAlpha : 0.1,
-			lineCount : new Cesium.Cartesian2(8, 8),
-			lineThickness : new Cesium.Cartesian2(2.0, 2.0)
-		});
 
 
 		$(".toggleRealCourse").on("click", function() {
