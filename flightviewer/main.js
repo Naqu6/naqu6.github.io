@@ -1,5 +1,9 @@
 var NUMBER_OF_POINTS = 500.0; // Accurate within 1 point
 var NUMBER_OF_SECONDS_IN_DAY = 86400.0;
+var SECONDS_TO_HOURS = 0.000277778;
+var METERS_TO_FEET = 3.28084;
+var METERS_TO_NM = 0.000539957;
+
 
 // Set Cesium Key and Viewer
 Cesium.BingMapsApi.defaultKey="WCDFG1t7dCho3pYtjhP3~9TtLhJwfh4TmoCzzEsWmJg~ArVbBS52XqbPzY8aDjPfjh1biz_l3e8vI6sseb6k7TuH9omW5MjD3v6ex6i2dKjy";
@@ -59,7 +63,7 @@ function toggleVisibilityOfElementsInArray(array) {
 }
 
 var manuvers = {
-	straightAndLevel: function(data) {
+	straightAndLevel: function(data, startTime, endTime) {
 		targetCourse = viewer.entities.add({
 		    name : 'Target Course',
 		    polyline : {
@@ -83,7 +87,7 @@ var manuvers = {
 			distance += Math.abs(Cesium.Cartesian3.distance(data.positions[i], data.positions[i-1]));
 		}
 
-		distance *= 0.000539957; //Convert from meters to nautical miles
+		distance *= METERS_TO_NM; //Convert from meters to nautical miles
 
 		var groundPositions = drawGroundLines(data);
 
@@ -105,19 +109,21 @@ var manuvers = {
 		initalPositionCarto = Cesium.Ellipsoid.WGS84.cartesianToCartographic(data.positions[0]);
 		finalPositionCarto = Cesium.Ellipsoid.WGS84.cartesianToCartographic(data.positions[data.positions.length-1]);
 
-		var result = "STRAIGHT AND LEVEL FLIGHT: \n\n Distance Traveled: " + distance + " nm \n Starting Altitute: " + Math.trunc(initalPositionCarto.height * 3.28084) + " ft \n Ending Altitute: " + Math.trunc(finalPositionCarto.height * 3.28084) + " ft \n";
+		var averageSpeed = distance/(Cesium.JulianDate.secondsDifference(startTime, endTime) * SECONDS_TO_HOURS)
+		var result = "STRAIGHT AND LEVEL FLIGHT: \n\n Distance Traveled: " + Math.trunc(distance) + " nm \n Starting Altitute: " + Math.trunc(initalPositionCarto.height * METERS_TO_FEET) + " ft \n Ending Altitute: " + Math.trunc(finalPositionCarto.height * METERS_TO_FEET) + " ft \n\n" + "Average Speed: " + Math.trunc(avgSpeed) + " knots";
 
 		$(".results").text(result);
+		$(".results").html($(".results").html().replace(/\n/g,'<br>'));
 
-	}, climb: function(data) {
+	}, climb: function(data, startTime, endTime) {
 
-	}, descend: function(data) {
+	}, descend: function(data, startTime, endTime) {
 
-	}, landingApproach: function(data) {
+	}, landingApproach: function(data, startTime, endTime) {
 
 
 
-	}, turnsAroundAPoint: function(data) {
+	}, turnsAroundAPoint: function(data, startTime, endTime) {
 
 		var totalDistance = 0.0;
 
