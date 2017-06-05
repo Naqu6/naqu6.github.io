@@ -1,0 +1,41 @@
+#cesiumContainer {
+	float: right;
+	width: 70%;
+	height: 89%;
+}
+
+* {
+	font-family: Lato;
+	color: white;
+}
+
+body {
+	background-color: black;
+}
+
+.left-nav button {
+    background-color:#1C7676;
+    border: 1px solid white;
+    color: white;
+}
+
+.header h1 {
+	margin-bottom: 20px;
+	color: #1C7676;
+}
+
+.left-nav {
+	overflow: scroll;
+	float: left;
+	width: 30%;
+	padding-right: 25px;
+	padding-left: 25px;
+	height: 90%;
+	background-color: #1C7676;
+
+}
+
+hr {
+	border-color: white;
+	margin: 0;
+}

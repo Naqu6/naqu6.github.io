@@ -192,6 +192,8 @@ $(".loadKML").on("click", function() {
           canvas: viewer.scene.canvas
      });
 
+	$(".fileMessage").text("File Selected: " + $(".kmlFile").get(0).files[0].name);
+
 	viewer.dataSources.add(dataSource).then(function(dSource) {
 		flight = dSource._entityCollection._entities._array[0]
 	});
