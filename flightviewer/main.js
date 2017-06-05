@@ -34,7 +34,7 @@ function drawGroundLines(data) {
 	actualCourseGroundLine = viewer.entities.add({
 		name: 'Actual Course Height',
 		polygon: {
-			positions: actualCoursePositions,
+			hierarchy: actualCoursePositions,
 			width: 5,
 			material: Cesium.Color.RED.withAlpha(0.4)
 		}
@@ -43,7 +43,7 @@ function drawGroundLines(data) {
 	targetCourseGroundLine = viewer.entities.add({
 		name: 'Actual Course Height',
 		polygon: {
-			positions: targetCoursePositions,
+			hierarchy: targetCoursePositions,
 			width: 5,
 			material: Cesium.Color.BLUE.withAlpha(0.4)
 		}
