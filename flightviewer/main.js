@@ -80,7 +80,7 @@ var manuvers = {
 
 		var distance = 0;
 		for (var i = 1; i<data.positions.length; i++) {
-			distance += abs(Cesium.Cartesian3.distance(data.positions[i], data.positions[i-1]));
+			distance += Math.abs(Cesium.Cartesian3.distance(data.positions[i], data.positions[i-1]));
 		}
 
 		distance *= 0.000539957; //Convert from meters to nautical miles
