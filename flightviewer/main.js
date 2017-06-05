@@ -102,8 +102,8 @@ var manuvers = {
 			targetCourseGroundLine.show = !targetCourseGroundLine.show
 		});
 
-		initalPositionCarto = Cesium.Ellipsoid.WGS84.cartesianToCartographic(initalPosition);
-		finalPositionCarto = Cesium.Ellipsoid.WGS84.cartesianToCartographic(finalPosition);
+		initalPositionCarto = Cesium.Ellipsoid.WGS84.cartesianToCartographic(data.positions[0]);
+		finalPositionCarto = Cesium.Ellipsoid.WGS84.cartesianToCartographic(data.positions[data.positions.length-1]);
 
 		var result = "STRAIGHT AND LEVEL FLIGHT: <br><br> Distance Traveled: " + distance + " nm <br> Starting Altitute: " + initalPositionCarto.height * 3.28084 + " ft <br> Ending Altitute: " + finalPositionCarto.height * 3.28084 + " ft <br>";
 
