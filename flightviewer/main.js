@@ -23,10 +23,10 @@ function drawGroundLines(data) {
 	var initalPosition = data.positions[0].clone();
 	var finalPosition = data.positions[data.positions.length-1].clone();
 
-	targetCoursePositions = [initalPosition, getGroundPosition(initalPosition), finalPosition, getGroundPosition(finalPosition)];
+	targetCoursePositions = [initalPosition, finalPosition, getGroundPosition(initalPosition), getGroundPosition(finalPosition)];
 	actualCoursePositions = [];
 
-	for (var i = 0; i<data.positions.length; i++) {
+	for (var i = 0; i<data.positions.length-1; i++) {
 		actualCoursePositions.push(data.positions[i]);
 		actualCoursePositions.push(getGroundPosition(data.positions[i]));
 	}
