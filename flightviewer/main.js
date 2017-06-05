@@ -14,7 +14,7 @@ var StartTime;
 var EndTime;
 
 function secondsDifference(timeA, timeB) {
-	var daysDifference = timeA.dayNumber - timeB.dayNumber;
+	var daysDifference = timeA.julianDayNumber - timeB.julianDayNumber;
 	var secondsDifference = timeA.secondsOfDay - timeB.secondsOfDay;
 
 	return Math.abs(daysDifference + (secondsDifference * NUMBER_OF_SECONDS_IN_DAY))
