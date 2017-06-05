@@ -78,6 +78,12 @@ var manuvers = {
 		    }
 		});
 
+		var distance = 0;
+		for (var i = 1; i<data.positions.length; i++) {
+			distance += abs(Cesium.Cartesian3.distance(data.positions[i], data.positions[i-1]));
+		}
+
+		distance *= 0.000539957; //Convert from meters to nautical miles
 
 		var groundPositions = drawGroundLines(data);
 
@@ -95,6 +101,13 @@ var manuvers = {
 
 			targetCourseGroundLine.show = !targetCourseGroundLine.show
 		});
+
+		initalPositionCarto = Cesium.Ellipsoid.WGS84.cartesianToCartographic(initalPosition);
+		finalPositionCarto = Cesium.Ellipsoid.WGS84.cartesianToCartographic(finalPosition);
+
+		var result = "STRAIGHT AND LEVEL FLIGHT: <br><br> Distance Traveled: " + distance + " nm <br> Starting Altitute: " + initalPositionCarto.height * 3.28084 + " ft <br> Ending Altitute: " + finalPositionCarto.height * 3.28084 + " ft <br>";
+
+		$(".results").text(result);
 
 	}, climb: function(data) {
 
