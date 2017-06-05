@@ -4,17 +4,18 @@ var SECONDS_TO_HOURS = 0.000277778;
 var METERS_TO_FEET = 3.28084;
 var METERS_TO_NM = 0.000539957;
 
+Cesium.BingMapsApi.defaultKey="WCDFG1t7dCho3pYtjhP3~9TtLhJwfh4TmoCzzEsWmJg~ArVbBS52XqbPzY8aDjPfjh1biz_l3e8vI6sseb6k7TuH9omW5MjD3v6ex6i2dKjy";
+var viewer = new Cesium.Viewer('cesiumContainer');
+
 $(document).on("ready", function() {
 	// Set Cesium Key and Viewer
-	Cesium.BingMapsApi.defaultKey="WCDFG1t7dCho3pYtjhP3~9TtLhJwfh4TmoCzzEsWmJg~ArVbBS52XqbPzY8aDjPfjh1biz_l3e8vI6sseb6k7TuH9omW5MjD3v6ex6i2dKjy";
-	var viewer = new Cesium.Viewer('cesiumContainer');
 
 	var flight;
 	var StartTime;
 	var EndTime;
 
 	$(".setEndTime").hide();
-	
+
 	function secondsDifference(timeA, timeB) {
 		var daysDifference = timeA.julianDayNumber - timeB.julianDayNumber;
 		var secondsDifference = timeA.secondsOfDay - timeB.secondsOfDay;
