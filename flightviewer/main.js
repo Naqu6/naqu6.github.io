@@ -23,10 +23,10 @@ function drawGroundLines(data) {
 	var initalPosition = data.positions[0].clone();
 	var finalPosition = data.positions[data.positions.length-1].clone();
 
-	targetCoursePositions = [initalPosition, finalPosition, getGroundPosition(finalPosition), getGroundPosition(initalPosition)];
+	targetCoursePositions = [initalPosition, getGroundPosition(initalPosition), finalPosition, getGroundPosition(finalPosition)];
 	actualCoursePositions = [];
 
-	for (var i = 0; i<data.positions.length-1; i++) {
+	for (var i = 0; i<data.positions.length; i++) {
 		actualCoursePositions.push(data.positions[i]);
 		actualCoursePositions.push(getGroundPosition(data.positions[i]));
 	}
@@ -41,7 +41,7 @@ function drawGroundLines(data) {
 	});
 
 	targetCourseGroundLine = viewer.entities.add({
-		name: 'Target Course Height',
+		name: 'Actual Course Height',
 		polygon: {
 			hierarchy: targetCoursePositions,
 			width: 5,
