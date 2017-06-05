@@ -120,7 +120,7 @@ $(document).ready(function() {
 			finalPositionCarto = Cesium.Ellipsoid.WGS84.cartesianToCartographic(data.positions[data.positions.length-1]);
 
 			var averageSpeed = distance/(secondsDifference(startTime, endTime) * SECONDS_TO_HOURS)
-			var result = "STRAIGHT AND LEVEL FLIGHT: \n\n Distance Traveled: " + Math.trunc(distance) + " nm \n Starting Altitute: " + Math.trunc(initalPositionCarto.height * METERS_TO_FEET) + " ft \n Ending Altitute: " + Math.trunc(finalPositionCarto.height * METERS_TO_FEET) + " ft \n\n" + "Average Speed: " + Math.trunc(avgSpeed) + " knots";
+			var result = "STRAIGHT AND LEVEL FLIGHT: \n\n Distance Traveled: " + Math.trunc(distance) + " nm \n Starting Altitute: " + Math.trunc(initalPositionCarto.height * METERS_TO_FEET) + " ft \n Ending Altitute: " + Math.trunc(finalPositionCarto.height * METERS_TO_FEET) + " ft \n\n" + "Average Speed: " + Math.trunc(averageSpeed) + " knots";
 
 			$(".results").text(result);
 			$(".results").html($(".results").html().replace(/\n/g,'<br>'));
