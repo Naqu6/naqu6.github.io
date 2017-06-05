@@ -36,7 +36,7 @@ function drawGroundLines(data) {
 			actualCourseGroundLines.push(viewer.entities.add({
 				name: 'Actual Course Height',
 				polygon: {
-					hierarchy: [length-1, length-2, length-4, length-3],
+					hierarchy: [actualCoursePositions[length-1], actualCoursePositions[length-2], actualCoursePositions[length-4], actualCoursePositions[length-3]],
 					width: 5,
 					material: Cesium.Color.RED.withAlpha(0.4)
 				}
