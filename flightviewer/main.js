@@ -9,6 +9,7 @@ var flight;
 var StartTime;
 var EndTime;
 
+
 function getGroundPosition(point) {
 	var cartoCoords = Cesium.Ellipsoid.WGS84.cartesianToCartographic(point);
 	cartoCoords.height = 0;
@@ -16,6 +17,39 @@ function getGroundPosition(point) {
 	cartesianPoint = Cesium.Ellipsoid.WGS84.cartographicToCartesian(cartoCoords);
 
 	return cartesianPoint;
+}
+
+function drawGroundLines(data) {
+	var initalPosition = data.positions[0].clone();
+	var finalPosition = data.positions[data.positions.length-1].clone();
+
+	targetCoursePositions = [initalPosition, getGroundPosition(initalPosition), finalPosition, getGroundPosition(finalPosition)];
+	actualCoursePositions = [];
+
+	for (var i = 0; i<data.positions.length; i++) {
+		actualCoursePositions.push(data.positions[i]);
+		actualCoursePositions.push(getGroundPosition(data.positions[i]));
+	}
+
+	actualCourseGroundLine = viewer.entities.add({
+		name: 'Actual Course Height',
+		polygon: {
+			positions: actualCoursePositions,
+			width: 5,
+			material: Cesium.Color.RED.withAlpha(0.4)
+		}
+	});
+
+	targetCourseGroundLine = viewer.entities.add({
+		name: 'Actual Course Height',
+		polygon: {
+			positions: targetCoursePositions,
+			width: 5,
+			material: Cesium.Color.BLUE.withAlpha(0.4)
+		}
+	});
+
+	return [actualCourseGroundLine, targetCourseGroundLine];
 }
 
 function toggleVisibilityOfElementsInArray(array) {
@@ -26,18 +60,10 @@ function toggleVisibilityOfElementsInArray(array) {
 
 var manuvers = {
 	straightAndLevel: function(data) {
-		initalPosition = data.positions[0].clone();
-		finalPosition = data.positions[data.positions.length-1].clone();
-
-		// averageAlt = (initalPosition.z + finalPosition.z)/2;
-
-		// initalPosition.z = averageAlt
-		// finalPosition.z = averageAlt;
-
 		targetCourse = viewer.entities.add({
 		    name : 'Target Course',
 		    polyline : {
-		        positions : [initalPosition, finalPosition],
+		        positions : [data.positions[0], data.positions[data.positions.length-1]],
 		        width : 5,
 		        material : Cesium.Color.BLUE
 		    }
@@ -52,33 +78,11 @@ var manuvers = {
 		    }
 		});
 
-		targetCoursePositions = [initalPosition, getGroundPosition(initalPosition), finalPosition, getGroundPosition(finalPosition)];
-		actualCoursePositions = [];
 
-		for (var i = 0; i<data.positions.length; i++) {
-			actualCoursePositions.push(data.positions[i]);
-			actualCoursePositions.push(getGroundPosition(data.positions[i]));
-		}
+		var groundPositions = drawGroundLines(data);
 
-		actualCourseGroundLine = viewer.entities.add({
-			name: 'Actual Course Height',
-			polygon: {
-				positions: actualCoursePositions,
-				width: 5,
-				material: Cesium.Color.RED.withAlpha(0.4)
-			}
-		});
-
-		targetCourseGroundLine = viewer.entities.add({
-			name: 'Actual Course Height',
-			polygon: {
-				positions: targetCoursePositions,
-				width: 5,
-				material: Cesium.Color.BLUE.withAlpha(0.4)
-			}
-		});
-
-
+		actualCourseGroundLine = groundPositions[0];
+		targetCourseGroundLine = groundPositions[1];
 
 		$(".toggleRealCourse").on("click", function() {
 			actualCourse.show = !actualCourse.show;
