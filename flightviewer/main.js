@@ -105,7 +105,7 @@ var manuvers = {
 		initalPositionCarto = Cesium.Ellipsoid.WGS84.cartesianToCartographic(data.positions[0]);
 		finalPositionCarto = Cesium.Ellipsoid.WGS84.cartesianToCartographic(data.positions[data.positions.length-1]);
 
-		var result = "STRAIGHT AND LEVEL FLIGHT: <br><br> Distance Traveled: " + distance + " nm <br> Starting Altitute: " + initalPositionCarto.height * 3.28084 + " ft <br> Ending Altitute: " + finalPositionCarto.height * 3.28084 + " ft <br>";
+		var result = "STRAIGHT AND LEVEL FLIGHT: \n\n Distance Traveled: " + distance + " nm \n Starting Altitute: " + Math.trunc(initalPositionCarto.height * 3.28084) + " ft \n Ending Altitute: " + Math.trunc(finalPositionCarto.height * 3.28084) + " ft \n";
 
 		$(".results").text(result);
 
