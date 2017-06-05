@@ -41,7 +41,7 @@ function drawGroundLines(data) {
 	});
 
 	targetCourseGroundLine = viewer.entities.add({
-		name: 'Actual Course Height',
+		name: 'Target Course Height',
 		polygon: {
 			hierarchy: targetCoursePositions,
 			width: 5,
