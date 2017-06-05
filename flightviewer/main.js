@@ -23,22 +23,27 @@ function drawGroundLines(data) {
 	var initalPosition = data.positions[0].clone();
 	var finalPosition = data.positions[data.positions.length-1].clone();
 
-	targetCoursePositions = [initalPosition, finalPosition, getGroundPosition(initalPosition), getGroundPosition(finalPosition)];
-	actualCoursePositions = [];
+	targetCoursePositions = [initalPosition, finalPosition, getGroundPosition(finalPosition), getGroundPosition(initalPosition)];
+	actualCoursePositions = []
+	actualCourseGroundLines = [];
 
-	for (var i = 0; i<data.positions.length-1; i++) {
+	for (var i = 0; i<data.positions.length; i++) {
 		actualCoursePositions.push(data.positions[i]);
 		actualCoursePositions.push(getGroundPosition(data.positions[i]));
+
+		if (i > 0) {
+			var length = actualCoursePositions.length;
+			actualCourseGroundLines.push(viewer.entities.add({
+				name: 'Actual Course Height',
+				polygon: {
+					hierarchy: [length-1, length-2, lenght-4, lenght-3],
+					width: 5,
+					material: Cesium.Color.RED.withAlpha(0.4)
+				}
+			}));
+		}
 	}
 
-	actualCourseGroundLine = viewer.entities.add({
-		name: 'Actual Course Height',
-		polygon: {
-			hierarchy: actualCoursePositions,
-			width: 5,
-			material: Cesium.Color.RED.withAlpha(0.4)
-		}
-	});
 
 	targetCourseGroundLine = viewer.entities.add({
 		name: 'Target Course Height',
@@ -49,7 +54,7 @@ function drawGroundLines(data) {
 		}
 	});
 
-	return [actualCourseGroundLine, targetCourseGroundLine];
+	return [actualCourseGroundLines, targetCourseGroundLine];
 }
 
 function toggleVisibilityOfElementsInArray(array) {
@@ -82,18 +87,16 @@ var manuvers = {
 		var groundPositions = drawGroundLines(data);
 
 		actualCourseGroundLine = groundPositions[0];
-		targetCourseGroundLine = groundPositions[1];
+		targetCourseGroundLines = groundPositions[1];
 
 		$(".toggleRealCourse").on("click", function() {
 			actualCourse.show = !actualCourse.show;
-
-			actualCourseGroundLine.show = !actualCourseGroundLine.show
 		});
 
 		$(".toggleTargetCourse").on("click", function() {
 			targetCourse.show = !targetCourse.show;
 
-			targetCourseGroundLine.show = !targetCourseGroundLine.show
+			toggleVisibilityOfElementsInArray(targetCourseGroundLines)
 		});
 
 	}, climb: function(data) {
