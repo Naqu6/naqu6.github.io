@@ -295,5 +295,5 @@ $(".setManeuver").on("click", function() {
     
     var manuver = manuvers[$(".selectManuver").val()];
 
-    manuver(data);
+    manuver(data, StartTime, EndTime);
 });
