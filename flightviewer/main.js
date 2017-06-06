@@ -269,7 +269,8 @@ $(document).ready(function() {
 		var entityPosition = entity.position;
 
 		var data = {
-			positions: []
+			positions: [],
+			distance: 0
 		};
 
 		var time = Cesium.JulianDate.clone(startTime);
@@ -285,7 +286,6 @@ $(document).ready(function() {
 		var y_total = 0;
 		var z_total = 0;
 
-		var distance = 0.0;
 		var speedTotal = 0;
 		var altitudeTotal = 0;
 
@@ -346,7 +346,7 @@ $(document).ready(function() {
 					minSpeed = speed
 				}
 
-				distance += legDistance;
+				data.distance += legDistance;
 
 				if (i == 1) {
 					data.initialSpeed = speed
