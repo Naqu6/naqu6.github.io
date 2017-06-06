@@ -28,6 +28,34 @@ $(document).ready(function() {
 		return cartesianPoint;
 	}
 
+	function segmentLine(startPositon, endPosition, numberOfPoints) {
+		var deltaKeys = ["x", "y", "z"];
+		var deltas = [];
+		var valueAdded = [];
+
+		var results = [];
+
+
+		for (var i = 0; i< deltaKeys.length; i++) {
+			deltas.push((endPosition[deltaKeys[i]] - startPositon[deltaKeys[i]])/numberOfPoints);
+			valueAdded.push(0.0);
+		}
+
+		for (var i = 0; i < numberOfPoints.length; i++ ) {
+			additons = [];
+
+			for (var i = 0; i < deltaKeys.length; i++) {
+				additons[i] = valueAdded[i] + deltas[i];
+				valueAdded[i] += deltas[i];
+			};
+
+			results.push(new Cartesian3(additons[0], additons[1], additons[2]));
+		}
+
+		return results;
+
+	}
+
 	function drawGroundPath(positions, color) {
 
 
@@ -38,8 +66,7 @@ $(document).ready(function() {
 			entites.push(viewer.entities.add({
 				name: 'Height',
 				polygon: {
-					// hierarchy: [positions[i], positions[i+1], getGroundPosition(positions[i + 1]), getGroundPosition(positions[i])],
-					hierarchy: [positions[i], positions[i+1]],
+					hierarchy: [positions[i], positions[i+1], getGroundPosition(positions[i + 1]), getGroundPosition(positions[i])],
 					material: color,
 					height: 0,
 					extrudedHeight: Cesium.Ellipsoid.WGS84.cartesianToCartographic(positions[i]).height
@@ -136,7 +163,7 @@ $(document).ready(function() {
 			});
 
 			actualCourseGroundLines = drawGroundPath(data.positions, Cesium.Color.RED.withAlpha(0.5));
-			targetCourseGroundLines = drawGroundPath([data.positions[0], data.positions[data.positions.length-1]], Cesium.Color.BLUE.withAlpha(0.5));
+			targetCourseGroundLines = drawGroundPath(segmentLine(data.positions[0], data.positions[data.positions.length-1], NUMBER_OF_POINTS), Cesium.Color.BLUE.withAlpha(0.5));
 
 			$(".toggleRealCourse").on("click", function() {
 				actualCourse.show = !actualCourse.show;
