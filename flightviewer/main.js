@@ -44,9 +44,9 @@ $(document).ready(function() {
 		for (var i = 0; i < numberOfPoints; i++ ) {
 			additons = [];
 
-			for (var i = 0; i < deltaKeys.length; i++) {
-				additons[i] = valueAdded[i] + deltas[i];
-				valueAdded[i] += deltas[i];
+			for (var j = 0; j < deltaKeys.length; j++) {
+				additons[j] = valueAdded[j] + deltas[j];
+				valueAdded[j] += deltas[j];
 			};
 
 			results.push(new Cesium.Cartesian3(additons[0], additons[1], additons[2]));
