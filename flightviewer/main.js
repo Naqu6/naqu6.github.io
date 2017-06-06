@@ -28,6 +28,7 @@ $(document).ready(function() {
 
 	function drawGroundPath(positions, color) {
 
+
 		var entites = [];
 		for (var i = 0; i < positions.length - 1; i++) {
 
@@ -35,7 +36,7 @@ $(document).ready(function() {
 			entites.push(viewer.entities.add({
 				name: 'Height',
 				polygon: {
-					hierarchy: [positions[i], positions[i+1]],
+					hierarchy: [positions[i], positions[i+1], getGroundPosition(positions[i + 1]), getGroundPosition(positions[i])],
 					material: color,
 					height: 0,
 					extrudedHeight: Cesium.Ellipsoid.WGS84.cartesianToCartographic(positions[i]).height
