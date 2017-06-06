@@ -28,21 +28,22 @@ $(document).ready(function() {
 
 	function drawGroundPath(positions, color) {
 
-		for (var i = positions.length - 1; i >= 0; i--) {
-			positions.push(getGroundPosition(positions[i]));
+		var entites = [];
+		for (var i = 0; i < positions.length - 1; i++) {
+
+
+			entites.push(viewer.entities.add({
+				name: 'Height',
+				polygon: {
+					hierarchy: [positions[i], positions[i+1]],
+					material: color,
+					height: 0,
+					extrudedHeight: Cesium.Ellipsoid.WGS84.cartesianToCartographic(positions[i]).height
+				}
+			}));
 		}
 
-		positions.push(data.positions[0]);
-
-		entity = viewer.entities.add({
-			name: 'Height',
-			polygon: {
-				hierarchy: positions,
-				material: color,
-			}
-		});
-
-		return entity;
+		return entites;
 	}
 
 	function toggleVisibilityOfElementsInArray(array) {
