@@ -42,10 +42,11 @@ $(document).ready(function() {
 
 		var entity = viewer.entities.add({
 		    name: 'Height',
-		    polygon: {
-		        hierarchy: positions,
+		    polyline: {
+		        positions: positions,
 		        material: color,
-		        height: maxHeight
+		        height: maxHeight,
+		        width: 5.0
 		    }
 		});
 
@@ -97,7 +98,7 @@ $(document).ready(function() {
 			unit: " knots"
 		}, {
 			dataName: "distance",
-			title: "Total Distance",
+			title: "Total Distance: ",
 			unit: " nautical miles"
 		}
 	]
