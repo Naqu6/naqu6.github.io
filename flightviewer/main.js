@@ -27,16 +27,20 @@ $(document).ready(function() {
 	}
 
 	function drawGroundPath(positions, color) {
+		var maxHeight = 0;
 
-		for (var i = positions.length - 1; i >= 0; i--) {
-			positions.push(getGroundPosition(positions[i]));
+		for (var i = 0; i < positions.length; i++) {
+			if (positions[i].z > maxHeight) {
+				maxHeight = positions[i].z;
+			}
 		}
 
 		var entity = viewer.entities.add({
 		    name: 'Height',
 		    polygon: {
 		        hierarchy: positions,
-		        material: Cesium.Color.RED.withAlpha(0.5),
+		        material: color,
+		        height: maxHeight
 		    }
 		});
 
@@ -127,8 +131,8 @@ $(document).ready(function() {
 
 			
 
-			actualCourseGroundLine = drawGroundPath(data.positions);
-			targetCourseGroundLine = drawGroundPath([data.positions[0], data.positions[data.positions.length-1]]);
+			actualCourseGroundLine = drawGroundPath(data.positions, Cesium.Color.RED.withAlpha(0.5));
+			targetCourseGroundLine = drawGroundPath([data.positions[0], data.positions[data.positions.length-1]], Cesium.Color.BLUE.withAlpha(0.5));
 
 			$(".toggleRealCourse").on("click", function() {
 				actualCourse.show = !actualCourse.show;
