@@ -27,6 +27,11 @@ $(document).ready(function() {
 	}
 
 	function drawGroundPath(positions, color) {
+
+		for (var i = positions.length - 1; i >= 0; i--) {
+			positions.push(getGroundPosition(positions[i]));
+		}
+
 		var entity = viewer.entities.add({
 		    name: 'Height',
 		    polygon: {
@@ -123,7 +128,7 @@ $(document).ready(function() {
 			
 
 			actualCourseGroundLine = drawGroundPath(data.positions);
-			targetCourseGroundLine = drawGroundPath([data.positions[0], getGroundPosition(data.positions[0]), data.positions[data.positions.length-1], getGroundPosition(data.positions[data.positions.length-1])]);
+			targetCourseGroundLine = drawGroundPath([data.positions[0], data.positions[data.positions.length-1]]);
 
 			$(".toggleRealCourse").on("click", function() {
 				actualCourse.show = !actualCourse.show;
