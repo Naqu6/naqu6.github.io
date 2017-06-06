@@ -49,7 +49,7 @@ $(document).ready(function() {
 				valueAdded[i] += deltas[i];
 			};
 
-			results.push(new Cartesian3(additons[0], additons[1], additons[2]));
+			results.push(new Cesium.Cartesian3(additons[0], additons[1], additons[2]));
 		}
 
 		return results;
