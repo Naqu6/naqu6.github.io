@@ -41,6 +41,7 @@ $(document).ready(function() {
 			    polygon: {
 			        hierarchy: [positions[i], positions[i+1]],
 			        material: color,
+			        height: positions[i].z
 			        extrudedHeight: getGroundPosition(positions[i]).z,
 			    }
 			}));
