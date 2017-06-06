@@ -1,4 +1,4 @@
-var NUMBER_OF_POINTS = 500.0; // Accurate within 1 point
+var NUMBER_OF_POINTS = 1000.0; // Accurate within 1 point
 var NUMBER_OF_SECONDS_IN_DAY = 86400.0;
 var SECONDS_TO_HOURS = 0.000277778;
 var METERS_TO_FEET = 3.28084;
@@ -14,6 +14,8 @@ $(document).ready(function() {
 	var flight;
 	var StartTime;
 	var EndTime;
+
+	var usedEntites = [];
 
 	$(".setEndTime").hide();
 
@@ -132,8 +134,6 @@ $(document).ready(function() {
 			    }
 			});
 
-			
-
 			actualCourseGroundLines = drawGroundPath(data.positions, Cesium.Color.RED.withAlpha(0.5));
 			targetCourseGroundLines = drawGroundPath([data.positions[0], data.positions[data.positions.length-1]], Cesium.Color.BLUE.withAlpha(0.5));
 
@@ -159,6 +159,43 @@ $(document).ready(function() {
 		}, descend: function(data, startTime, endTime) {
 
 		}, landingApproach: function(data, startTime, endTime) {
+
+			targetCourse = viewer.entities.add({
+			    name : 'Target Course',
+			    polyline : {
+			        positions : [data.positions[0], data.positions[data.positions.length-1]],
+			        width : 5,
+			        material : Cesium.Color.BLUE
+			    }
+			});
+
+			actualCourse = viewer.entities.add({
+			    name : 'Actual Course',
+			    polyline: {
+			        positions: data.positions,
+			        material: Cesium.Color.RED
+			    }
+			});
+
+			actualCourseGroundLines = drawGroundPath(data.positions, Cesium.Color.RED.withAlpha(0.5));
+			targetCourseGroundLines = drawGroundPath([data.positions[0], data.positions[data.positions.length-1]], Cesium.Color.BLUE.withAlpha(0.5));
+
+			$(".toggleRealCourse").on("click", function() {
+				actualCourse.show = !actualCourse.show;
+
+				toggleVisibilityOfElementsInArray(actualCourseGroundLines);
+			});
+
+			$(".toggleTargetCourse").on("click", function() {
+				targetCourse.show = !targetCourse.show;
+
+				toggleVisibilityOfElementsInArray(targetCourseGroundLine)
+			});
+
+			var result = "LANDING APPROACH STATISTICS: \n\n" + buildDataTitles(data);
+
+			$(".results").text(result);
+			$(".results").html($(".results").html().replace(/\n/g,'<br>'));
 
 		}, turnsAroundAPoint: function(data, startTime, endTime) {
 
@@ -197,37 +234,41 @@ $(document).ready(function() {
 				targetCourse.show = !targetCourse.show;
 			});
 
+			var result = "TURNS AROUND A POINT RESULTS: \n\n" + buildDataTitles(data);
+
+			$(".results").text(result);
+			$(".results").html($(".results").html().replace(/\n/g,'<br>'));
 
 		}, STurns: function(data) {
 
 		}, rectCourse: function(data) {
 
-			var targetCourse = viewer.entities.add({
-			    position: data.averagePosition,
-			    name: 'Target Course',
-			    ellipse: {
-			        semiMinorAxis : averageDistance,
-			        semiMajorAxis : averageDistance,
-			        material : Cesium.Color.BLUE.withAlpha(0.5),
-			        outline : true
-			    }
-			});
+			// var targetCourse = viewer.entities.add({
+			//     position: data.averagePosition,
+			//     name: 'Target Course',
+			//     ellipse: {
+			//         semiMinorAxis : averageDistance,
+			//         semiMajorAxis : averageDistance,
+			//         material : Cesium.Color.BLUE.withAlpha(0.5),
+			//         outline : true
+			//     }
+			// });
 
-			var actualCourse = viewer.entities.add({
-			    name: 'Actual Course',
-			    polygon: {
-			        hierarchy: data.positions,
-			        material: Cesium.Color.RED.withAlpha(0.5),
-			    }
-			});
+			// var actualCourse = viewer.entities.add({
+			//     name: 'Actual Course',
+			//     polygon: {
+			//         hierarchy: data.positions,
+			//         material: Cesium.Color.RED.withAlpha(0.5),
+			//     }
+			// });
 
-			$(".toggleRealCourse").on("click", function() {
-				actualCourse.show = !actualCourse.show;
-			});
+			// $(".toggleRealCourse").on("click", function() {
+			// 	actualCourse.show = !actualCourse.show;
+			// });
 
-			$(".toggleTargetCourse").on("click", function() {
-				targetCourse.show = !targetCourse.show;
-			});
+			// $(".toggleTargetCourse").on("click", function() {
+			// 	targetCourse.show = !targetCourse.show;
+			// });
 
 		}
 	}
