@@ -335,7 +335,6 @@ $(document).ready(function() {
 				var hoursTimeDifference = SECONDS_TO_HOURS * Math.abs(Cesium.JulianDate.secondsDifference(lastTime, time));
 
 				var speed = legDistance/hoursTimeDifference;
-				data.speeds.push(speed);
 
 				speedTotal += speed;
 
