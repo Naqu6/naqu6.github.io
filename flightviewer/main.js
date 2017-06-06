@@ -26,37 +26,16 @@ $(document).ready(function() {
 		return cartesianPoint;
 	}
 
-	function drawGroundLines(data) {
-		var initalPosition = data.positions[0].clone();
-		var finalPosition = data.positions[data.positions.length-1].clone();
-
-		targetCoursePositions = [initalPosition, getGroundPosition(initalPosition), finalPosition, getGroundPosition(finalPosition)];
-		actualCoursePositions = [];
-
-		for (var i = 0; i<data.positions.length; i++) {
-			actualCoursePositions.push(data.positions[i]);
-			actualCoursePositions.push(getGroundPosition(data.positions[i]));
-		}
-
-		actualCourseGroundLine = viewer.entities.add({
-			name: 'Actual Course Height',
-			polygon: {
-				hierarchy: actualCoursePositions,
-				width: 5,
-				material: Cesium.Color.RED.withAlpha(0.4)
-			}
+	function drawGroundPath(positions, color) {
+		var entity = viewer.entities.add({
+		    name: 'Height',
+		    polygon: {
+		        hierarchy: positions,
+		        material: Cesium.Color.RED.withAlpha(0.5),
+		    }
 		});
 
-		targetCourseGroundLine = viewer.entities.add({
-			name: 'Actual Course Height',
-			polygon: {
-				hierarchy: targetCoursePositions,
-				width: 5,
-				material: Cesium.Color.BLUE.withAlpha(0.4)
-			}
-		});
-
-		return [actualCourseGroundLine, targetCourseGroundLine];
+		return entity;
 	}
 
 	function toggleVisibilityOfElementsInArray(array) {
@@ -141,10 +120,10 @@ $(document).ready(function() {
 			    }
 			});
 
-			var groundPositions = drawGroundLines(data);
+			
 
-			actualCourseGroundLine = groundPositions[0];
-			targetCourseGroundLine = groundPositions[1];
+			actualCourseGroundLine = drawGroundPath(data.positions);
+			targetCourseGroundLine = drawGroundPath([data.positions[0], getGroundPosition(data.positions[0]), data.positions[data.positions.length-1], getGroundPosition(data.positions[data.positions.length-1])]);
 
 			$(".toggleRealCourse").on("click", function() {
 				actualCourse.show = !actualCourse.show;
@@ -168,8 +147,6 @@ $(document).ready(function() {
 		}, descend: function(data, startTime, endTime) {
 
 		}, landingApproach: function(data, startTime, endTime) {
-
-
 
 		}, turnsAroundAPoint: function(data, startTime, endTime) {
 
