@@ -27,10 +27,15 @@ $(document).ready(function() {
 	}
 
 	function drawGroundPath(positions, color) {
-		var maxHeight = 0;
+
+		if (positions.length == 0) {
+		 	return null;
+		}
+
+		var maxHeight = positions[0].z;
 
 		for (var i = 0; i < positions.length; i++) {
-			if (positions[i].z > maxHeight) {
+			if (Math.abs(positions[i].z) > Math.abs(maxHeight)) {
 				maxHeight = positions[i].z;
 			}
 		}
