@@ -38,7 +38,8 @@ $(document).ready(function() {
 			entites.push(viewer.entities.add({
 				name: 'Height',
 				polygon: {
-					hierarchy: [positions[i], positions[i+1], getGroundPosition(positions[i + 1]), getGroundPosition(positions[i])],
+					// hierarchy: [positions[i], positions[i+1], getGroundPosition(positions[i + 1]), getGroundPosition(positions[i])],
+					hierarchy: [positions[i], positions[i+1]],
 					material: color,
 					height: 0,
 					extrudedHeight: Cesium.Ellipsoid.WGS84.cartesianToCartographic(positions[i]).height
@@ -189,7 +190,7 @@ $(document).ready(function() {
 			$(".toggleTargetCourse").on("click", function() {
 				targetCourse.show = !targetCourse.show;
 
-				toggleVisibilityOfElementsInArray(targetCourseGroundLine)
+				toggleVisibilityOfElementsInArray(targetCourseGroundLines)
 			});
 
 			var result = "LANDING APPROACH STATISTICS: \n\n" + buildDataTitles(data);
