@@ -10,18 +10,18 @@
 }
 
 body {
-	background-color: #1C7676;
+	background-color: #21A0A0;
 }
 
 .left-nav button {
-    background-color:#1C7676;
+    background-color:#21A0A0;
     border: 1px solid white;
     color: white;
 }
 
 .header h1 {
 	margin-bottom: 20px;
-	color: #1C7676;
+	color: #21A0A0;
 }
 
 .left-nav {
@@ -31,7 +31,7 @@ body {
 	padding-right: 25px;
 	padding-left: 25px;
 	height: 90%;
-	background-color: #1C7676;
+	background-color: #21A0A0;
 
 }
 

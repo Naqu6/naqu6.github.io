@@ -65,6 +65,62 @@ $(document).ready(function() {
 		}
 	}
 
+	var dataTitles = [
+		{
+			dataName: "initialAltitude",
+			title: "Initial Altitude: ",
+			unit: " feet MSL"
+		}, {
+			dataName: "finalAltitude",
+			title: "Final Altitude: ",
+			unit: " feet MSL"
+		}, {
+			dataName: "averageAltitude",
+			title: "Average Altitude: ",
+			unit: " feet MSL"
+		}, {
+			dataName: "minAlt",
+			title: "Minimum Altitude: ",
+			unit: " feet MSL"
+		}, {
+			dataName: "maxAlt",
+			title: "Maximum Altitude: ",
+			unit: " feet MSL"
+		}, {
+			dataName: "initalSpeed",
+			title: "Initial Speed: ",
+			unit: " knots"
+		}, {
+			dataName: "finalSpeed",
+			title: "Final Speed: ",
+			unit: " knots"
+		}, {
+			dataName: "minSpeed",
+			title: "Minimum Speed: ",
+			unit: " knots"
+		}, {
+			dataName: "maxSpeed",
+			title: "Maximum Speed: ",
+			unit: " knots"
+		}, {
+			dataName: "distance",
+			title: "Total Distance",
+			unit: " nautical miles"
+		}
+	]
+
+	function buildDataTitles(data) {
+		var result = "";
+
+		for (var i = 0; i < dataTitles.length; i++) {
+			dataTitle = dataTitles[i];
+
+			result += dataTitle.title + data[dataTitle.dataName] + dataTitle.unit + "\n\n";
+		}
+
+		return result;
+	}
+
 	var manuvers = {
 		straightAndLevel: function(data, startTime, endTime) {
 			targetCourse = viewer.entities.add({
@@ -85,13 +141,6 @@ $(document).ready(function() {
 			    }
 			});
 
-			var distance = 0;
-			for (var i = 1; i<data.positions.length; i++) {
-				distance += Math.abs(Cesium.Cartesian3.distance(data.positions[i], data.positions[i-1]));
-			}
-
-			distance *= METERS_TO_NM; //Convert from meters to nautical miles
-
 			var groundPositions = drawGroundLines(data);
 
 			actualCourseGroundLine = groundPositions[0];
@@ -109,11 +158,7 @@ $(document).ready(function() {
 				targetCourseGroundLine.show = !targetCourseGroundLine.show
 			});
 
-			initalPositionCarto = Cesium.Ellipsoid.WGS84.cartesianToCartographic(data.positions[0]);
-			finalPositionCarto = Cesium.Ellipsoid.WGS84.cartesianToCartographic(data.positions[data.positions.length-1]);
-
-			var averageSpeed = distance/(Math.abs(Cesium.JulianDate.secondsDifference(startTime, endTime)) * SECONDS_TO_HOURS)
-			var result = "STRAIGHT AND LEVEL FLIGHT: \n\n Distance Traveled: " + Math.trunc(distance) + " nm \n Starting Altitute: " + Math.trunc(initalPositionCarto.height * METERS_TO_FEET) + " ft \n Ending Altitute: " + Math.trunc(finalPositionCarto.height * METERS_TO_FEET) + " ft \n\n" + "Average Speed: " + Math.trunc(averageSpeed) + " knots";
+			var result = "STRAIGHT AND LEVEL FLIGHT RESULTS: \n\n" + buildDataTitles(data);
 
 			$(".results").text(result);
 			$(".results").html($(".results").html().replace(/\n/g,'<br>'));
@@ -198,7 +243,6 @@ $(document).ready(function() {
 		}
 	}
 
-	// temporary variables 
 	data = [];
 
 	// Setup Initial KML LOAD
@@ -225,7 +269,7 @@ $(document).ready(function() {
 		var entityPosition = entity.position;
 
 		var data = {
-			positions: [],
+			positions: []
 		};
 
 		var time = Cesium.JulianDate.clone(startTime);
@@ -241,15 +285,41 @@ $(document).ready(function() {
 		var y_total = 0;
 		var z_total = 0;
 
+		var distance = 0;
+		var speedTotal = 0;
+		var altitudeTotal = 0;
+
+		var maxSpeed = -1;
+		var minSpeed = Number.MAX_VALUE;
+
+		var maxAlt = -Number.MAX_VALUE;
+		var minAlt = Number.MAX_VALUE; 
+
+		var i = 0;
+		var lastTime;
 
 		while (endTime.dayNumber > time.dayNumber || endTime.secondsOfDay >= time.secondsOfDay) { // Cesium.Compare() doesn't work as intended, using custom evaluation
-			currentPosition = entityPosition.getValue(time);
+			var currentPosition = entityPosition.getValue(time);
 
 			data.positions.push(currentPosition);
+
+			var cartoPosition = Cesium.Ellipsoid.WGS84.cartesianToCartographic(currentPosition);
 
 			x_total += currentPosition.x;
 			y_total += currentPosition.y;
 			z_total += currentPosition.z;
+
+			var alt = cartoPosition.height * METERS_TO_FEET;
+
+			altitudeTotal += alt;
+
+			if (minAlt > alt) {
+				minAlt = alt;
+			}
+
+			if (maxAlt < alt) {
+				maxAlt = alt;
+			}
 
 			time.secondsOfDay += secondsIncrease;
 
@@ -257,9 +327,54 @@ $(document).ready(function() {
 				time.dayNumber += 1;
 				time.secondsOfDay -= NUMBER_OF_SECONDS_IN_DAY;
 			}
+
+			if (i > 0) {
+				var lastPosition = data.positions[i-1];
+
+				var legDistance = Math.abs(Cesium.Cartesian3.distance(lastPosition, currentPosition) * METERS_TO_NMR)
+				var hoursTimeDifference = SECONDS_TO_HOURS * Math.abs(Cesium.JulianDate.secondsDifference(lastTime, time));
+
+				var speed = legDistance/hoursTimeDifference;
+				data.speeds.push(speed);
+
+				speedTotal += speed;
+
+				if (speed > maxSpeed) {
+					maxSpeed = speed;
+				}
+
+				if (speed < minSpeed) {
+					minSpeed = speed
+				}
+
+				distance += legDistance;
+
+				if (i == 1) {
+					data.initialSpeed = speed
+				} else {
+					data.finalSpeed = speed
+				}
+			}
+
+			lastTime = time.clone();
+
+			i++;
+
 		}
 
 		data.averagePosition = new Cesium.Cartesian3(x_total/data.positions.length, y_total/data.positions.length, z_total/data.positions.length);
+
+		data.initalAltitude = Cesium.Ellipsoid.WGS84.cartesianToCartographic(data.positions[0]).height * METERS_TO_FEET
+		data.finalAltitude = Cesium.Ellipsoid.WGS84.cartesianToCartographic(data.positions[data.positions.length - 1]).height * METERS_TO_FEET
+
+		data.maxSpeed = maxSpeed;
+		data.minSpeed = minSpeed;
+
+		data.maxAlt = maxAlt;
+		data.minAlt = minAlt;
+
+		data.averageSpeed = speedTotal/data.positions.length;
+		data.averageAltitude = altitudeTotal/data.positions.length;
 
 		return data;
 	}
