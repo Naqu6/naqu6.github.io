@@ -32,6 +32,8 @@ $(document).ready(function() {
 			positions.push(getGroundPosition(positions[i]));
 		}
 
+		positions.push(data.positions[0]);
+
 		entity = viewer.entities.add({
 			name: 'Height',
 			polygon: {
