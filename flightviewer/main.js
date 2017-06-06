@@ -32,24 +32,30 @@ $(document).ready(function() {
 		 	return null;
 		}
 
-		var maxHeight = positions[0].z;
+		var polygons = [];
 
-		for (var i = 0; i < positions.length; i++) {
-			if (Math.abs(positions[i].z) > Math.abs(maxHeight)) {
-				maxHeight = positions[i].z;
-			}
+		for (var i = 0; i < positions.length - 1; i++) {
+			var positionAGroundPosition = getGroundPosition(positions[i]);
+			var positionBGroundPosition = getGroundPosition(positions[i+1]);
+
+			var height = (positionAGroundPosition.z + positionBGroundPosition.z)/2;
+			var extrudedHeight = ((positions[i].z - positionAGroundPosition.z) + (positions[i+1].z - positionBGroundPosition.z))/2;
+
+			polygons.push(viewer.entities.add({
+			    name: 'Height',
+			    polygon: {
+			        hierarchy: [positions[i], positions[i+1]],
+			        material: color,
+			        height: height,
+			        extrudedHeight: extrudedHeight
+			    }
+			}));
+
+			
 		}
 
-		var entity = viewer.entities.add({
-		    name: 'Height',
-		    polygon: {
-		        hierarchy: positions,
-		        material: color,
-		        height: maxHeight,
-		    }
-		});
 
-		return entity;
+		return polygons;
 	}
 
 	function toggleVisibilityOfElementsInArray(array) {
@@ -135,19 +141,19 @@ $(document).ready(function() {
 
 			
 
-			actualCourseGroundLine = drawGroundPath(data.positions, Cesium.Color.RED.withAlpha(0.5));
-			targetCourseGroundLine = drawGroundPath([data.positions[0], data.positions[data.positions.length-1]], Cesium.Color.BLUE.withAlpha(0.5));
+			actualCourseGroundLines = drawGroundPath(data.positions, Cesium.Color.RED.withAlpha(0.5));
+			targetCourseGroundLines = drawGroundPath([data.positions[0], data.positions[data.positions.length-1]], Cesium.Color.BLUE.withAlpha(0.5));
 
 			$(".toggleRealCourse").on("click", function() {
 				actualCourse.show = !actualCourse.show;
 
-				actualCourseGroundLine.show = !actualCourseGroundLine.show
+				toggleVisibilityOfElementsInArray(actualCourseGroundLines);
 			});
 
 			$(".toggleTargetCourse").on("click", function() {
 				targetCourse.show = !targetCourse.show;
 
-				targetCourseGroundLine.show = !targetCourseGroundLine.show
+				toggleVisibilityOfElementsInArray(targetCourseGroundLine)
 			});
 
 			var result = "STRAIGHT AND LEVEL FLIGHT RESULTS: \n\n" + buildDataTitles(data);
