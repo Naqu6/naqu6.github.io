@@ -285,7 +285,7 @@ $(document).ready(function() {
 		var y_total = 0;
 		var z_total = 0;
 
-		var distance = 0;
+		var distance = 0.0;
 		var speedTotal = 0;
 		var altitudeTotal = 0;
 
