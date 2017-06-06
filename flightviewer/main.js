@@ -163,7 +163,9 @@ $(document).ready(function() {
 			});
 
 			actualCourseGroundLines = drawGroundPath(data.positions, Cesium.Color.RED.withAlpha(0.5));
-			targetCourseGroundLines = drawGroundPath(segmentLine(data.positions[0], data.positions[data.positions.length-1], NUMBER_OF_POINTS), Cesium.Color.BLUE.withAlpha(0.5));
+
+			var targetSegmented = segmentLine(data.positions[0], data.positions[data.positions.length-1], NUMBER_OF_POINTS);
+			targetCourseGroundLines = drawGroundPath(targetSegmented, Cesium.Color.BLUE.withAlpha(0.5));
 
 			$(".toggleRealCourse").on("click", function() {
 				actualCourse.show = !actualCourse.show;
