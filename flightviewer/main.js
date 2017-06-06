@@ -28,29 +28,19 @@ $(document).ready(function() {
 
 	function drawGroundPath(positions, color) {
 
-		if (positions.length == 0) {
-		 	return null;
+		for (var i = positions.length - 1; i >= 0; i--) {
+			positions.push(getGroundPosition(positions[i]));
 		}
 
-		var polygons = [];
+		entity = viewer.entities.add({
+			name: 'Height',
+			polygon: {
+				hierarchy: positions,
+				material: color,
+			}
+		});
 
-		for (var i = 0; i < positions.length - 1; i++) {
-
-			polygons.push(viewer.entities.add({
-			    name: 'Height',
-			    polygon: {
-			        hierarchy: [positions[i], positions[i+1]],
-			        material: color,
-			        height: positions[i].z,
-			        extrudedHeight: getGroundPosition(positions[i]).z,
-			    }
-			}));
-
-			
-		}
-
-
-		return polygons;
+		return entity;
 	}
 
 	function toggleVisibilityOfElementsInArray(array) {
