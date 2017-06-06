@@ -87,7 +87,7 @@ $(document).ready(function() {
 			title: "Maximum Altitude: ",
 			unit: " feet MSL"
 		}, {
-			dataName: "initalSpeed",
+			dataName: "initialSpeed",
 			title: "Initial Speed: ",
 			unit: " knots"
 		}, {
@@ -115,7 +115,7 @@ $(document).ready(function() {
 		for (var i = 0; i < dataTitles.length; i++) {
 			dataTitle = dataTitles[i];
 
-			result += dataTitle.title + data[dataTitle.dataName] + dataTitle.unit + "\n\n";
+			result += dataTitle.title + Math.trunc(data[dataTitle.dataName]) + dataTitle.unit + "\n\n";
 		}
 
 		return result;
@@ -363,7 +363,7 @@ $(document).ready(function() {
 
 		data.averagePosition = new Cesium.Cartesian3(x_total/data.positions.length, y_total/data.positions.length, z_total/data.positions.length);
 
-		data.initalAltitude = Cesium.Ellipsoid.WGS84.cartesianToCartographic(data.positions[0]).height * METERS_TO_FEET
+		data.initialAltitude = Cesium.Ellipsoid.WGS84.cartesianToCartographic(data.positions[0]).height * METERS_TO_FEET
 		data.finalAltitude = Cesium.Ellipsoid.WGS84.cartesianToCartographic(data.positions[data.positions.length - 1]).height * METERS_TO_FEET
 
 		data.maxSpeed = maxSpeed;
