@@ -35,19 +35,13 @@ $(document).ready(function() {
 		var polygons = [];
 
 		for (var i = 0; i < positions.length - 1; i++) {
-			var positionAGroundPosition = getGroundPosition(positions[i]);
-			var positionBGroundPosition = getGroundPosition(positions[i+1]);
-
-			var height = (positionAGroundPosition.z + positionBGroundPosition.z)/2;
-			var extrudedHeight = ((positions[i].z - positionAGroundPosition.z) + (positions[i+1].z - positionBGroundPosition.z))/2;
 
 			polygons.push(viewer.entities.add({
 			    name: 'Height',
 			    polygon: {
 			        hierarchy: [positions[i], positions[i+1]],
 			        material: color,
-			        height: height,
-			        extrudedHeight: extrudedHeight
+			        extrudedHeight: getGroundPosition(positions[i]).z;
 			    }
 			}));
 
@@ -92,6 +86,10 @@ $(document).ready(function() {
 		}, {
 			dataName: "finalSpeed",
 			title: "Final Speed: ",
+			unit: " knots"
+		}, {
+			dataName: "averageSpeed",
+			title: "Average Speed: ",
 			unit: " knots"
 		}, {
 			dataName: "minSpeed",
