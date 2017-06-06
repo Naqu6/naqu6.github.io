@@ -42,11 +42,10 @@ $(document).ready(function() {
 
 		var entity = viewer.entities.add({
 		    name: 'Height',
-		    polyline: {
-		        positions: positions,
+		    polygon: {
+		        hierarchy: positions,
 		        material: color,
 		        height: maxHeight,
-		        width: 5.0
 		    }
 		});
 
@@ -130,7 +129,6 @@ $(document).ready(function() {
 			    name : 'Actual Course',
 			    polyline: {
 			        positions: data.positions,
-			        width: 5,
 			        material: Cesium.Color.RED
 			    }
 			});
