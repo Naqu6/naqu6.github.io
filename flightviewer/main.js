@@ -41,7 +41,7 @@ $(document).ready(function() {
 			valueAdded.push(0.0);
 		}
 
-		for (var i = 0; i < numberOfPoints.length; i++ ) {
+		for (var i = 0; i < numberOfPoints; i++ ) {
 			additons = [];
 
 			for (var i = 0; i < deltaKeys.length; i++) {
