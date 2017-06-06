@@ -331,7 +331,7 @@ $(document).ready(function() {
 			if (i > 0) {
 				var lastPosition = data.positions[i-1];
 
-				var legDistance = Math.abs(Cesium.Cartesian3.distance(lastPosition, currentPosition) * METERS_TO_NMR)
+				var legDistance = Math.abs(Cesium.Cartesian3.distance(lastPosition, currentPosition) * METERS_TO_NM)
 				var hoursTimeDifference = SECONDS_TO_HOURS * Math.abs(Cesium.JulianDate.secondsDifference(lastTime, time));
 
 				var speed = legDistance/hoursTimeDifference;
