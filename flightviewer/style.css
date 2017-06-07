@@ -33,11 +33,14 @@ body {
 	overflow: scroll;
 	float: left;
 	width: 30%;
-	padding-right: 25px;
-	padding-left: 25px;
 	height: 90%;
 	background-color: rgb(31,42,49);
 
+}
+
+.padding {
+	padding-left: 25px;
+	padding-right: 25px;
 }
 
 hr {
