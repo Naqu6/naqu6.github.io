@@ -13,7 +13,12 @@ body {
 	background-color: rgb(31,42,49);
 }
 
-.left-nav button {
+.left-nav label {
+	padding-left: 5px;
+	padding-right: 5px;
+	font-style: normal;
+}
+.left-nav button, .left-nav label {
     background-color:rgb(31,42,49);
     border: 1px solid white;
     color: white;

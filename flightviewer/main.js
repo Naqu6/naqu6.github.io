@@ -270,7 +270,7 @@ $(document).ready(function() {
 	data = [];
 
 	// Setup Initial KML LOAD
-	$(".loadKML").on("click", function() {
+	$(".kmlFile").change(function() {
 
 		// Set the data source
 		// $(".kmlFile") is a jquery array, so we need to get the first element (the input), and then query the uploaded files.
