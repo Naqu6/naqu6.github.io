@@ -287,10 +287,7 @@ $(document).ready(function() {
 		viewer.dataSources.add(dataSource).then(function(dSource) {
 			flight = dSource._entityCollection._entities._array[0];
 
-			viewer.flyTo(flight).then(function(){
-                viewer.trackedEntity = flight;
-                viewer.clock.shouldAnimate = true;
-            });
+			viewer.flyTo(flight);
 			
 		});
 	});
