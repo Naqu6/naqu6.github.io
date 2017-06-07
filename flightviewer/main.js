@@ -287,7 +287,7 @@ $(document).ready(function() {
 		viewer.dataSources.add(dataSource).then(function(dSource) {
 			flight = dSource._entityCollection._entities._array[0];
 
-			var aboveFlightPosition = Cesium.Ellipsoid.WGS84.cartesianToCartographic(flight);
+			var aboveFlightPosition = Cesium.Ellipsoid.WGS84.cartesianToCartographic(flight.position);
 			aboveFlightPosition.height += 10000;
 
 			aboveFlightPosition = Cesium.Ellipsoid.WGS84.cartographicToCartesian(aboveFlightPosition);
