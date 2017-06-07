@@ -293,7 +293,7 @@ $(document).ready(function() {
 			aboveFlightPosition = Cesium.Ellipsoid.WGS84.cartographicToCartesian(aboveFlightPosition);
 			
 			viewer.camera.flyTo({
-    			destination : aboveFlightPosition;
+    			destination : aboveFlightPosition
 			});
 			
 		});
