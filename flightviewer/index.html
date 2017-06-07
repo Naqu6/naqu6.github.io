@@ -49,6 +49,7 @@
 <label>
     Load File <input type="file" class="kmlFile" style="display: none;">
 </label>
+<p> <i> Please Upload a ForeFlight KML File. </i></p>
 <br>
 <h4 class="fileMessage"> No File Selected</h4>
 <br>
@@ -58,9 +59,10 @@
 <center>
 <h2> Analyze Maneuver</h2>
 <br><br><hr class="padding"><br><br>
-</center>
+
 <button class="setStartTime">Start Time</button><button class="setEndTime">Stop Time</button><br><br>
-<button class="toggleFlightPath"> Toggle Flight Path</button><button class="toggleRealCourse"> Toggle Real Course </button> <button class="toggleTargetCourse"> Toggle Target Course </button><br><br>
+<p><i> Please push the "Start Time" button when the selected phase of flight starts starts, and the "Stop Time" button when it ends. Then Click "Analyze Selection"</i> </p>
+
 
 <select class="selectManuver">
     <option value="straightAndLevel">Straight and Level</option>
@@ -68,13 +70,22 @@
     <option value="landingApproach">Landing Approach</option>
 </select><br><br>
 
-<button class="setManeuver">Grade Maneuver</button><br><br>
+<button class="setManeuver">Analyze Selection</button><br><br>
+
+
+<button class="toggleFlightPath"> Toggle Flight Path</button><br><br>
+
+<button class="toggleRealCourse"> Toggle Real Course </button> <br><br>
+
+<button class="toggleTargetCourse"> Toggle Target Course </button><br><br>
+
 
 <hr>
 
 <p class="results">
 </p>
 
+</center>
 </div>
 <div id="cesiumContainer"></div>
 <script src="main.js"></script>

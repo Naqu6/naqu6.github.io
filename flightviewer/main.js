@@ -1,6 +1,7 @@
 var NUMBER_OF_POINTS = 250.0; // Accurate within 1 point
 var NUMBER_OF_SECONDS_IN_DAY = 86400.0;
 var SECONDS_TO_HOURS = 0.000277778;
+var HOURS_TO_MINUTES = 60;
 var METERS_TO_FEET = 3.28084;
 var METERS_TO_NM = 0.000539957;
 
@@ -18,6 +19,10 @@ $(document).ready(function() {
 	var usedEntites = [];
 
 	$(".setEndTime").hide();
+
+	$(".toggleFlightPath").hide();
+	$(".toggleRealCourse").hide();
+	$(".toggleTargetCourse").hide();
 
 	function getGroundPosition(point) {
 		var cartoCoords = Cesium.Ellipsoid.WGS84.cartesianToCartographic(point);
@@ -128,6 +133,26 @@ $(document).ready(function() {
 			dataName: "distance",
 			title: "Total Distance: ",
 			unit: " nautical miles"
+		}, {
+			dataName: "initialVerticalSpeed",
+			title: "Initial Vertical Speed: ",
+			unit: " feet per minute"
+		}, {
+			dataName: "finalVerticalSpeed",
+			title: "Final Vertical Speed: ",
+			unit: " feet per minute"
+		}, {
+			dataName: "averageVerticalSpeed",
+			title: "Average Vertical Speed:" ,
+			unit: " feet per minute"
+		}, {
+			dataName: "maxVerticalSpeed",
+			title: "Max Vertical Speed: ",
+			unit: " feet per minute"
+		}, {
+			dataName: "minVerticalSpeed",
+			title: "Minimum Vertical Speed: ",
+			unit: " feet mer minute"
 		}
 	]
 
@@ -182,8 +207,79 @@ $(document).ready(function() {
 			$(".results").html($(".results").html().replace(/\n/g,'<br>'));
 
 		}, climb: function(data, startTime, endTime) {
+			targetCourse = viewer.entities.add({
+			    name : 'Target Course',
+			    polyline : {
+			        positions : [data.positions[0], data.positions[data.positions.length-1]],
+			        width : 5,
+			        material : Cesium.Color.BLUE
+			    }
+			});
+
+			actualCourse = viewer.entities.add({
+			    name : 'Actual Course',
+			    polyline: {
+			        positions: data.positions,
+			        material: Cesium.Color.RED
+			    }
+			});
+
+			actualCourseGroundLines = drawGroundPath(data.positions, Cesium.Color.RED.withAlpha(0.5));
+
+
+			$(".toggleRealCourse").on("click", function() {
+				actualCourse.show = !actualCourse.show;
+
+				toggleVisibilityOfElementsInArray(actualCourseGroundLines);
+			});
+
+			$(".toggleTargetCourse").on("click", function() {
+				targetCourse.show = !targetCourse.show;
+
+			});
+
+			var result = "CLIMB STATISTICS: \n\n" + buildDataTitles(data);
+
+			$(".results").text(result);
+			$(".results").html($(".results").html().replace(/\n/g,'<br>'));
 
 		}, descend: function(data, startTime, endTime) {
+
+			targetCourse = viewer.entities.add({
+			    name : 'Target Course',
+			    polyline : {
+			        positions : [data.positions[0], data.positions[data.positions.length-1]],
+			        width : 5,
+			        material : Cesium.Color.BLUE
+			    }
+			});
+
+			actualCourse = viewer.entities.add({
+			    name : 'Actual Course',
+			    polyline: {
+			        positions: data.positions,
+			        material: Cesium.Color.RED
+			    }
+			});
+
+			actualCourseGroundLines = drawGroundPath(data.positions, Cesium.Color.RED.withAlpha(0.5));
+
+
+			$(".toggleRealCourse").on("click", function() {
+				actualCourse.show = !actualCourse.show;
+
+				toggleVisibilityOfElementsInArray(actualCourseGroundLines);
+			});
+
+			$(".toggleTargetCourse").on("click", function() {
+				targetCourse.show = !targetCourse.show;
+
+			});
+
+			var result = "DESCENT STATISTICS: \n\n" + buildDataTitles(data);
+
+			$(".results").text(result);
+			$(".results").html($(".results").html().replace(/\n/g,'<br>'));
 
 		}, landingApproach: function(data, startTime, endTime) {
 
@@ -275,6 +371,11 @@ $(document).ready(function() {
 		// Set the data source
 		// $(".kmlFile") is a jquery array, so we need to get the first element (the input), and then query the uploaded files.
 		// Files[0] is the correct file
+
+		$(".toggleFlightPath").show();
+		$(".toggleRealCourse").show();
+		$(".toggleTargetCourse").show();
+
 		var dataSource = Cesium.KmlDataSource.load($(".kmlFile").get(0).files[0],
 	     {
 	     	// Set the camera and canvas to the current scene
@@ -322,12 +423,16 @@ $(document).ready(function() {
 
 		var speedTotal = 0;
 		var altitudeTotal = 0;
+		var verticalSpeedTotal = 0;
 
 		var maxSpeed = -1;
 		var minSpeed = Number.MAX_VALUE;
 
 		var maxAlt = -Number.MAX_VALUE;
 		var minAlt = Number.MAX_VALUE; 
+
+		var maxVerticalSpeed = -Number.MAX_VALUE;
+		var minVerticalSpeed = -Number.MAX_VALUE;
 
 		var i = 0;
 		var lastTime;
@@ -366,11 +471,16 @@ $(document).ready(function() {
 				var lastPosition = data.positions[i-1];
 
 				var legDistance = Math.abs(Cesium.Cartesian3.distance(lastPosition, currentPosition) * METERS_TO_NM)
+				var heightDistance = METERS_TO_FEET * (cartoPosition.height - Cesium.Ellipsoid.WGS84.cartesianToCartographic(lastPosition).height);
 				var hoursTimeDifference = SECONDS_TO_HOURS * Math.abs(Cesium.JulianDate.secondsDifference(lastTime, time));
 
 				var speed = legDistance/hoursTimeDifference;
 
+				var verticalSpeed = heightDistance/(HOURS_TO_MINUTES * hoursTimeDifference);
+
+
 				speedTotal += speed;
+				verticalSpeedTotal += verticalSpeed;
 
 				if (speed > maxSpeed) {
 					maxSpeed = speed;
@@ -380,12 +490,22 @@ $(document).ready(function() {
 					minSpeed = speed
 				}
 
+				if (verticalSpeed > maxVerticalSpeed) {
+					maxVerticalSpeed = speed;
+				}
+
+				if (verticalSpeed < minVerticalSpeed) {
+					minVerticalSpeed = speed;
+				}
+
 				data.distance += legDistance;
 
 				if (i == 1) {
 					data.initialSpeed = speed
+					data.initialVerticalSpeed = verticalSpeed;
 				} else {
 					data.finalSpeed = speed
+					data.finalVerticalSpeed = verticalSpeed;
 				}
 			}
 
@@ -406,8 +526,13 @@ $(document).ready(function() {
 		data.maxAlt = maxAlt;
 		data.minAlt = minAlt;
 
-		data.averageSpeed = speedTotal/data.positions.length;
-		data.averageAltitude = altitudeTotal/data.positions.length;
+		data.averageSpeed = speedTotal/(data.positions.length-1);
+		data.averageAltitude = altitudeTotal/(data.positions.length-1);
+
+		data.minVerticalSpeed = minVerticalSpeed;
+		data.maxVerticalSpeed = maxVerticalSpeed;
+
+		data.averageVerticalSpeed = verticalSpeedTotal/(data.positions.length-1);
 
 		return data;
 	}
