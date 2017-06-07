@@ -294,7 +294,7 @@ $(document).ready(function() {
 			aboveFlightPosition = Cesium.Ellipsoid.WGS84.cartographicToCartesian(aboveFlightPosition);
 
 			startPositon.position = aboveFlightPosition;
-			viewer.flyTo(aboveFlightPosition);
+			viewer.flyTo(startPositon);
 			
 		});
 	});
