@@ -478,6 +478,10 @@ $(document).ready(function() {
 
 				var verticalSpeed = heightDistance/(HOURS_TO_MINUTES * hoursTimeDifference);
 
+				console.log(heightDistance);
+				console.log(verticalSpeed);
+				console.log(hoursTimeDifference);
+
 				speedTotal += speed;
 				verticalSpeedTotal += verticalSpeed;
 
