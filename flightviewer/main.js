@@ -432,7 +432,7 @@ $(document).ready(function() {
 		var minAlt = Number.MAX_VALUE; 
 
 		var maxVerticalSpeed = -Number.MAX_VALUE;
-		var minVerticalSpeed = -Number.MAX_VALUE;
+		var minVerticalSpeed = Number.MAX_VALUE;
 
 		var i = 0;
 		var lastTime;
@@ -478,6 +478,9 @@ $(document).ready(function() {
 
 				var verticalSpeed = heightDistance/(HOURS_TO_MINUTES * hoursTimeDifference);
 
+				Console.log(heightDistance);
+				Console.log(verticalSpeed);
+				Console.log(hoursTimeDifference);
 
 				speedTotal += speed;
 				verticalSpeedTotal += verticalSpeed;
