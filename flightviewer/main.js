@@ -286,15 +286,15 @@ $(document).ready(function() {
 
 		viewer.dataSources.add(dataSource).then(function(dSource) {
 			flight = dSource._entityCollection._entities._array[0];
-			startPositon = dSource._entityCollection._entities._array[0];
 
-			var aboveFlightPosition = Cesium.Ellipsoid.WGS84.cartesianToCartographic(flight.position);
+			var aboveFlightPosition = Cesium.Ellipsoid.WGS84.cartesianToCartographic(flight.position.getValue(entity.currentTime));
 			aboveFlightPosition.height += 10000;
 
 			aboveFlightPosition = Cesium.Ellipsoid.WGS84.cartographicToCartesian(aboveFlightPosition);
-
-			startPositon.position = aboveFlightPosition;
-			viewer.flyTo(startPositon);
+			
+			viewer.camera.flyTo({
+    			destination : aboveFlightPosition;
+			});
 			
 		});
 	});
