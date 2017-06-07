@@ -1,4 +1,4 @@
-var NUMBER_OF_POINTS = 1000.0; // Accurate within 1 point
+var NUMBER_OF_POINTS = 250.0; // Accurate within 1 point
 var NUMBER_OF_SECONDS_IN_DAY = 86400.0;
 var SECONDS_TO_HOURS = 0.000277778;
 var METERS_TO_FEET = 3.28084;
