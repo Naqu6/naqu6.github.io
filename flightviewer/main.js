@@ -285,7 +285,13 @@ $(document).ready(function() {
 		$(".fileMessage").text("File Selected: " + $(".kmlFile").get(0).files[0].name);
 
 		viewer.dataSources.add(dataSource).then(function(dSource) {
-			flight = dSource._entityCollection._entities._array[0]
+			flight = dSource._entityCollection._entities._array[0];
+
+			viewer.flyTo(flight).then(function(){
+                viewer.trackedEntity = flight;
+                viewer.clock.shouldAnimate = true;
+            });
+			
 		});
 	});
 
