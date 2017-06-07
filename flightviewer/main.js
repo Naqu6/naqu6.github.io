@@ -28,33 +28,33 @@ $(document).ready(function() {
 		return cartesianPoint;
 	}
 
-	function segmentLine(startPositon, endPosition, numberOfPoints) {
-		var deltaKeys = ["x", "y", "z"];
-		var deltas = [];
-		var valueAdded = [];
+	// function segmentLine(startPositon, endPosition, numberOfPoints) {
+	// 	var deltaKeys = ["x", "y", "z"];
+	// 	var deltas = [];
+	// 	var valueAdded = [];
 
-		var results = [];
+	// 	var results = [];
 
 
-		for (var i = 0; i< deltaKeys.length; i++) {
-			deltas.push((endPosition[deltaKeys[i]] - startPositon[deltaKeys[i]])/numberOfPoints);
-			valueAdded.push(0.0);
-		}
+	// 	for (var i = 0; i< deltaKeys.length; i++) {
+	// 		deltas.push((endPosition[deltaKeys[i]] - startPositon[deltaKeys[i]])/numberOfPoints);
+	// 		valueAdded.push(0.0);
+	// 	}
 
-		for (var i = 0; i < numberOfPoints; i++ ) {
-			additons = [];
+	// 	for (var i = 0; i < numberOfPoints; i++ ) {
+	// 		additons = [];
 
-			for (var j = 0; j < deltaKeys.length; j++) {
-				additons[j] = valueAdded[j] + deltas[j];
-				valueAdded[j] += deltas[j];
-			};
+	// 		for (var j = 0; j < deltaKeys.length; j++) {
+	// 			additons[j] = valueAdded[j] + deltas[j];
+	// 			valueAdded[j] += deltas[j];
+	// 		};
 
-			results.push(new Cesium.Cartesian3(additons[0], additons[1], additons[2]));
-		}
+	// 		results.push(new Cesium.Cartesian3(additons[0], additons[1], additons[2]));
+	// 	}
 
-		return results;
+	// 	return results;
 
-	}
+	// }
 
 	function drawGroundPath(positions, color) {
 
@@ -164,8 +164,6 @@ $(document).ready(function() {
 
 			actualCourseGroundLines = drawGroundPath(data.positions, Cesium.Color.RED.withAlpha(0.5));
 
-			var targetSegmented = segmentLine(data.positions[0], data.positions[data.positions.length-1], NUMBER_OF_POINTS);
-			targetCourseGroundLines = drawGroundPath(targetSegmented, Cesium.Color.BLUE.withAlpha(0.5));
 
 			$(".toggleRealCourse").on("click", function() {
 				actualCourse.show = !actualCourse.show;
@@ -176,10 +174,9 @@ $(document).ready(function() {
 			$(".toggleTargetCourse").on("click", function() {
 				targetCourse.show = !targetCourse.show;
 
-				toggleVisibilityOfElementsInArray(targetCourseGroundLine)
 			});
 
-			var result = "STRAIGHT AND LEVEL FLIGHT RESULTS: \n\n" + buildDataTitles(data);
+			var result = "STRAIGHT AND LEVEL FLIGHT STATISTICS: \n\n" + buildDataTitles(data);
 
 			$(".results").text(result);
 			$(".results").html($(".results").html().replace(/\n/g,'<br>'));
@@ -208,7 +205,6 @@ $(document).ready(function() {
 			});
 
 			actualCourseGroundLines = drawGroundPath(data.positions, Cesium.Color.RED.withAlpha(0.5));
-			targetCourseGroundLines = drawGroundPath([data.positions[0], data.positions[data.positions.length-1]], Cesium.Color.BLUE.withAlpha(0.5));
 
 			$(".toggleRealCourse").on("click", function() {
 				actualCourse.show = !actualCourse.show;
@@ -219,7 +215,6 @@ $(document).ready(function() {
 			$(".toggleTargetCourse").on("click", function() {
 				targetCourse.show = !targetCourse.show;
 
-				toggleVisibilityOfElementsInArray(targetCourseGroundLines)
 			});
 
 			var result = "LANDING APPROACH STATISTICS: \n\n" + buildDataTitles(data);
@@ -264,41 +259,10 @@ $(document).ready(function() {
 				targetCourse.show = !targetCourse.show;
 			});
 
-			var result = "TURNS AROUND A POINT RESULTS: \n\n" + buildDataTitles(data);
+			var result = "TURNS AROUND A POINT STATISTICS: \n\n" + buildDataTitles(data);
 
 			$(".results").text(result);
 			$(".results").html($(".results").html().replace(/\n/g,'<br>'));
-
-		}, STurns: function(data) {
-
-		}, rectCourse: function(data) {
-
-			// var targetCourse = viewer.entities.add({
-			//     position: data.averagePosition,
-			//     name: 'Target Course',
-			//     ellipse: {
-			//         semiMinorAxis : averageDistance,
-			//         semiMajorAxis : averageDistance,
-			//         material : Cesium.Color.BLUE.withAlpha(0.5),
-			//         outline : true
-			//     }
-			// });
-
-			// var actualCourse = viewer.entities.add({
-			//     name: 'Actual Course',
-			//     polygon: {
-			//         hierarchy: data.positions,
-			//         material: Cesium.Color.RED.withAlpha(0.5),
-			//     }
-			// });
-
-			// $(".toggleRealCourse").on("click", function() {
-			// 	actualCourse.show = !actualCourse.show;
-			// });
-
-			// $(".toggleTargetCourse").on("click", function() {
-			// 	targetCourse.show = !targetCourse.show;
-			// });
 
 		}
 	}
