@@ -256,7 +256,7 @@ $(document).ready(function() {
 			$(".results").text(result);
 			$(".results").html($(".results").html().replace(/\n/g,'<br>'));
 
-		}, descend: function(data, startTime, endTime) {
+		}, descent: function(data, startTime, endTime) {
 
 			targetCourse = viewer.entities.add({
 			    name : 'Target Course',
