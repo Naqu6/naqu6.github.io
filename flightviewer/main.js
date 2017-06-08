@@ -169,7 +169,7 @@ $(document).ready(function() {
 		return result;
 	}
 
-	var manuvers = {
+	var maneuvers = {
 		straightAndLevel: function(data, startTime, endTime) {
 			targetCourse = viewer.entities.add({
 			    name : 'Target Course',
@@ -190,6 +190,12 @@ $(document).ready(function() {
 
 			actualCourseGroundLines = drawGroundPath(data.positions, Cesium.Color.RED.withAlpha(0.5));
 
+			usedEntites.push(targetCourse);
+			usedEntites.push(actualCourse);
+
+			for (var i = 0; i<actualCourseGroundLines.length; i++) {
+				usedEntites.push(actualCourseGroundLines[i]);
+			}
 
 			$(".toggleRealCourse").on("click", function() {
 				actualCourse.show = !actualCourse.show;
@@ -227,6 +233,12 @@ $(document).ready(function() {
 
 			actualCourseGroundLines = drawGroundPath(data.positions, Cesium.Color.RED.withAlpha(0.5));
 
+			usedEntites.push(targetCourse);
+			usedEntites.push(actualCourse);
+
+			for (var i = 0; i<actualCourseGroundLines.length; i++) {
+				usedEntites.push(actualCourseGroundLines[i]);
+			}
 
 			$(".toggleRealCourse").on("click", function() {
 				actualCourse.show = !actualCourse.show;
@@ -265,6 +277,12 @@ $(document).ready(function() {
 
 			actualCourseGroundLines = drawGroundPath(data.positions, Cesium.Color.RED.withAlpha(0.5));
 
+			usedEntites.push(targetCourse);
+			usedEntites.push(actualCourse);
+
+			for (var i = 0; i<actualCourseGroundLines.length; i++) {
+				usedEntites.push(actualCourseGroundLines[i]);
+			}
 
 			$(".toggleRealCourse").on("click", function() {
 				actualCourse.show = !actualCourse.show;
@@ -302,6 +320,13 @@ $(document).ready(function() {
 			});
 
 			actualCourseGroundLines = drawGroundPath(data.positions, Cesium.Color.RED.withAlpha(0.5));
+
+			usedEntites.push(targetCourse);
+			usedEntites.push(actualCourse);
+
+			for (var i = 0; i<actualCourseGroundLines.length; i++) {
+				usedEntites.push(actualCourseGroundLines[i]);
+			}
 
 			$(".toggleRealCourse").on("click", function() {
 				actualCourse.show = !actualCourse.show;
@@ -348,8 +373,18 @@ $(document).ready(function() {
 			    }
 			});
 
+			actualCourseGroundLines = drawGroundPath(data.positions, Cesium.Color.RED.withAlpha(0.5));
+
+			usedEntites.push(targetCourse);
+			usedEntites.push(actualCourse);
+
+			for (var i = 0; i<actualCourseGroundLines.length; i++) {
+				usedEntites.push(actualCourseGroundLines[i]);
+			}
+
 			$(".toggleRealCourse").on("click", function() {
 				actualCourse.show = !actualCourse.show;
+				toggleVisibilityOfElementsInArray(actualCourseGroundLines);
 			});
 
 			$(".toggleTargetCourse").on("click", function() {
@@ -533,16 +568,6 @@ $(document).ready(function() {
 		return data;
 	}
 
-	function tracePath(positions) {
-		viewer.entities.add({
-		    name : 'Trace of Path',
-		    polyline : {
-		        positions : positions,
-		        width : 5,
-		        material : Cesium.Color.RED
-		    }
-		});
-	}
 
 	$(".toggleFlightPath").on("click", function() {
 		flight.show = !flight.show;
@@ -563,6 +588,17 @@ $(document).ready(function() {
 	});
 
 	$(".setManeuver").on("click", function() {
+
+		if (StartTime.dayNumber > EndTime.dayNumber && StartTime.EndTime.secondsOfDay > EndTime.secondsOfDay) {
+			alert("Please Re-Select the Start Selection and End Selection. End of Selection Occurs Before Start of Selection.")
+		}
+
+		for (var i = usedEntites.length-1; i>=0; i--) {
+			viewer.entites.remove(usedEntites[i]);
+			viewer.entities.splice(i,1);
+		}
+
+
 		$(".toggleFlightPath").show();
 		$(".toggleRealCourse").show();
 		$(".toggleTargetCourse").show();
@@ -570,8 +606,8 @@ $(document).ready(function() {
 
 		data = getPositionData(flight, StartTime, EndTime);
 	    
-	    var manuver = manuvers[$(".selectManuver").val()];
+	    var maneuver = maneuvers[$(".selectmaneuver").val()];
 
-	    manuver(data, StartTime, EndTime);
+	    maneuver(data, StartTime, EndTime);
 	});
 });
