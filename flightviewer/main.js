@@ -153,7 +153,7 @@ $(document).ready(function() {
 		}, {
 			dataName: "minVerticalSpeed",
 			title: "Minimum Vertical Speed: ",
-			unit: " feet mer minute"
+			unit: " feet per minute"
 		}
 	]
 
