@@ -23,6 +23,7 @@ $(document).ready(function() {
 	$(".toggleFlightPath").hide();
 	$(".toggleRealCourse").hide();
 	$(".toggleTargetCourse").hide();
+	$(".resultsdiv").hide();
 
 	function getGroundPosition(point) {
 		var cartoCoords = Cesium.Ellipsoid.WGS84.cartesianToCartographic(point);
@@ -47,14 +48,14 @@ $(document).ready(function() {
 	// 	}
 
 	// 	for (var i = 0; i < numberOfPoints; i++ ) {
-	// 		additons = [];
+	// 		additions = [];
 
 	// 		for (var j = 0; j < deltaKeys.length; j++) {
-	// 			additons[j] = valueAdded[j] + deltas[j];
+	// 			additions[j] = valueAdded[j] + deltas[j];
 	// 			valueAdded[j] += deltas[j];
 	// 		};
 
-	// 		results.push(new Cesium.Cartesian3(additons[0], additons[1], additons[2]));
+	// 		results.push(new Cesium.Cartesian3(additions[0], additions[1], additions[2]));
 	// 	}
 
 	// 	return results;
@@ -372,10 +373,6 @@ $(document).ready(function() {
 		// $(".kmlFile") is a jquery array, so we need to get the first element (the input), and then query the uploaded files.
 		// Files[0] is the correct file
 
-		$(".toggleFlightPath").show();
-		$(".toggleRealCourse").show();
-		$(".toggleTargetCourse").show();
-
 		var dataSource = Cesium.KmlDataSource.load($(".kmlFile").get(0).files[0],
 	     {
 	     	// Set the camera and canvas to the current scene
@@ -566,6 +563,11 @@ $(document).ready(function() {
 	});
 
 	$(".setManeuver").on("click", function() {
+		$(".toggleFlightPath").show();
+		$(".toggleRealCourse").show();
+		$(".toggleTargetCourse").show();
+		$(".resultsdiv").show();
+
 		data = getPositionData(flight, StartTime, EndTime);
 	    
 	    var manuver = manuvers[$(".selectManuver").val()];

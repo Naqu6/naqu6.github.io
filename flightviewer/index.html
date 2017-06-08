@@ -44,7 +44,7 @@
 
 <center>
 <h2> UPLOAD FILE</h2>
-<hr class="padding">
+<hr width="75%">
 <br>
 <label>
     Load File <input type="file" class="kmlFile" style="display: none;">
@@ -58,7 +58,7 @@
 </center>
 <center>
 <h2> Analyze Maneuver</h2>
-<br><br><hr class="padding"><br><br>
+<br><br><hr width="75%"><br><br>
 
 
 <select class="selectManuver">
@@ -68,24 +68,30 @@
 </select><br><br>
 
 
-<button class="setStartTime">Start Time</button><button class="setEndTime">Stop Time</button><br><br>
-<p><i> Please push the "Start Time" button when the selected phase of flight starts starts, and the "Stop Time" button when it ends. Then Click "Analyze Selection"</i> </p>
+<button class="setStartTime">Start Selection</button><button class="setEndTime">Stop Selection</button><br><br>
+<p><i> Please push the "Start Selection" button when the selected phase of flight starts starts, and the "Stop Selection" button when it ends. Then Click "Analyze Selection"</i> </p>
 
 
 <button class="setManeuver">Analyze Selection</button><br><br>
 
 
 <button class="toggleFlightPath"> Toggle Flight Path</button><br><br>
+<p class="toggleFlightPath"><i>Toggle Visibility of the Flight Path</i></p> <br>
 
 <button class="toggleRealCourse"> Toggle Real Course </button> <br><br>
+<p class="toggleRealCourse"><i>Toggle Visibility of the Real Course During the Selected Time</i></p> <br>
 
 <button class="toggleTargetCourse"> Toggle Target Course </button><br><br>
+<p class="toggleRealCourse"><i>Toggle Visibility of the Target Course During the Selected Time</i></p> <br>
 
-
-<hr>
+<div class="resultsdiv">
+<center><h2> Results </h2></center>
+<hr width="75%">
 
 <p class="results">
 </p>
+
+</div>
 
 </center>
 </div>
