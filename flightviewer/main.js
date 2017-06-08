@@ -595,7 +595,7 @@ $(document).ready(function() {
 
 		for (var i = usedEntites.length-1; i>=0; i--) {
 			viewer.entities.remove(usedEntites[i]);
-			viewer.entities.splice(i,1);
+			usedEntites.splice(i,1);
 		}
 
 
