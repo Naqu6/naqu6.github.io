@@ -594,7 +594,7 @@ $(document).ready(function() {
 		}
 
 		for (var i = usedEntites.length-1; i>=0; i--) {
-			viewer.entites.remove(usedEntites[i]);
+			viewer.entities.remove(usedEntites[i]);
 			viewer.entities.splice(i,1);
 		}
 
