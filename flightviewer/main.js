@@ -478,10 +478,6 @@ $(document).ready(function() {
 
 				var verticalSpeed = heightDistance/(HOURS_TO_MINUTES * hoursTimeDifference);
 
-				console.log(heightDistance);
-				console.log(verticalSpeed);
-				console.log(hoursTimeDifference);
-
 				speedTotal += speed;
 				verticalSpeedTotal += verticalSpeed;
 
@@ -494,11 +490,11 @@ $(document).ready(function() {
 				}
 
 				if (verticalSpeed > maxVerticalSpeed) {
-					maxVerticalSpeed = speed;
+					maxVerticalSpeed = verticalSpeed;
 				}
 
 				if (verticalSpeed < minVerticalSpeed) {
-					minVerticalSpeed = speed;
+					minVerticalSpeed = verticalSpeed;
 				}
 
 				data.distance += legDistance;
