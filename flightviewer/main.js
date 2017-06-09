@@ -418,7 +418,15 @@ $(document).ready(function() {
 		$(".fileMessage").text("File Selected: " + $(".kmlFile").get(0).files[0].name);
 
 		viewer.dataSources.add(dataSource).then(function(dSource) {
-			flight = dSource._entityCollection._entities._array[0];
+
+			if (dSource._entityCollection._entities._array.length == 2) {
+				// Foreflight
+				flight = dSource._entityCollection._entities._array[0];
+			} else {
+				// flightaware
+
+				flight = dSource._entityCollection._entities._array[dSource._entityCollection._entities._array.length-1];
+			}
 
 			var aboveFlightPosition = Cesium.Ellipsoid.WGS84.cartesianToCartographic(flight.position.getValue(entity.currentTime));
 			aboveFlightPosition.height += 10000;
