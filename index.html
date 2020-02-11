@@ -1,109 +1,363 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-  (adsbygoogle = window.adsbygoogle || []).push({
-    google_ad_client: "ca-pub-8978675347431436",
-    enable_page_level_ads: true
-  });
-</script>
-    <!-- Use correct character set. -->
-    <meta charset="utf-8">
-    <!-- Tell IE to use the latest, best version. -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <title>Flight Viewer</title>
-    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="flightviewer/style.css">
-    <script src="flightviewer/Cesium/Build/Cesium/Cesium.js"></script>
-    <style>
-        @import url(flightviewer/Cesium/Build/Cesium/Widgets/widgets.css);
-        html, body {
-            width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;
-        }
-    </style>
+	<title>B & S Delivery</title>
+	<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+
+	<link href="/site.css" rel="stylesheet">
 </head>
 <body>
+	<div class="header">
+		<div class="site-title">
+			B & S Courier Service
+		</div>
 
-<div class="header">
-    <h1>
-        <center>
-            FLIGHT ANALYZER
+		<div class="site-links">
+			<a href="#about" class="about-us-link">
+				About
+			</a>
 
-        </center>
+			<a href="#services" class="services-link">
+				Services
+			</a>
 
-    </h1>
+			<a href="#order-online" class="order-online-link">
+				Order Online
+			</a>
 
-<hr>
-</div>
-<div class="left-nav">
+			<a href="#contact" class="contact-link">
+				Contact
+			</a>
+		</div>
+	</div>
 
-<center>
-<h2> UPLOAD FILE</h2>
-<hr width="75%">
-<br>
-<label>
-    Load File <input type="file" class="kmlFile" style="display: none;">
-</label>
-<p> <i> Please Upload a KML File. </i></p>
-<br>
-<h4 class="fileMessage"> No File Selected</h4>
-<br>
-<hr>
-<br>
-</center>
-<center>
-<h2> Analyze Phase of Flight</h2>
-<br><br><hr width="75%"><br><br>
+	<div class="landing">
+		<div class="flex">
+			<div class="landing-card">
+				<div class="landing-card-title">
+					B & S Courier Service
+				</div>
+
+				<div class="landing-card-subtitle">
+					Better Service, Guaranteed
+				</div>
+				
+				<div class="landing-content">
+					<div class="landing-content-title">
+						B&S Delivery, your same day courier for the Greater Toronto Area
+					</div>
+
+					<div class="regions-served">
+						<div class="region">
+							Ajax / Whitby
+						</div>
+
+						<div class="region">
+							Aurora
+						</div>
+
+						<div class="region">
+							Bramalea
+						</div>
+
+						<div class="region">
+							Brampton
+						</div>
+
+						<div class="region">
+							Burlington
+						</div>
+
+						<div class="region">
+							Hamilton
+						</div>
+
+						<div class="region">
+							Markham
+						</div>
+
+						<div class="region">
+							Mississauga
+						</div>
+
+						<div class="region">
+							Newmarket
+						</div>
+
+						<div class="region">
+							Oakville
+						</div>
+
+						<div class="region">
+							Oshawa
+						</div>
+
+						<div class="region">
+							Pickering
+						</div>
+
+						<div class="region">
+							Richmond Hill
+						</div>
+
+						<div class="region">
+							Toronto
+						</div>
+
+						<div class="region">
+							Vaughan
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<div class="about-us pane" id="about">
+		<div class="pane-content card">
+			<div class="pane-title">
+				About Us
+			</div>
+
+			<div class="pane-body">
+				B & S Delivery Ltd. has been providing same day courier services to businesses in the Greater Toronto Area (GTA) since 1989.
+
+				Whether you are sending an envelope or a van load - across town or across the street - you won't get better service anywhere.
+
+				And that's guaranteed. Our first rate drivers, dispatch and ordering system make sure of it.
+
+				<br>
+				<br>
+
+				Our dispatch system has been perfected to ensure that the right driver in the right vehicle arrives at the right place at the right time.
+
+				Our drivers have been personally selected for their driving abilities and their commitment to service - making sure your package gets to where it needs to be - when it needs to be there.
+
+				Our ordering and billing system makes sure you always know what went where, when and for how much.
+
+				<br>
+				<br>
+
+				We offer a range of 5 service levels - early bird, 5 hour, rush, direct, door to door - at prices that are highly competitive.
+
+				Of course, we are constantly looking at ways to improve.
+
+				Case in point - in response to the needs of our customers we have introduced an online ordering system.
+
+				Another case in point - it is now possible to charge our service to your VISA, MasterCard or American Express credit card (a good way to earn some extra travel points).
+
+				<br>
+				<br>
 
 
-<select class="selectmaneuver">
-    <option value="straightAndLevel">Straight and Level</option>
-    <option value="climb">Climb</option>
-    <option value="descent">Descent</option>
-    <option value="landingApproach">Landing Approach</option>
-    <option value="turnsAroundAPoint">Turns Around A Point</option>
-</select><br><br>
+				If you are looking for a better way to get your parcels and packages around the GTA, be sure to give us a call. We can discuss what is most important to you and ensure your needs are met.
 
+				That's Better Service, Guaranteed. 
+			</div>
+		</div>
 
-<button class="setStartTime">Start Selection</button><button class="setEndTime">Stop Selection</button><br><br>
-<p><i> Please push the "Start Selection" button when the selected phase of flight starts starts, and the "Stop Selection" button when it ends. Then Click "Analyze Selection"</i> </p>
+		<div class="pane-img about-us-image" style="background-image: url('/static/aboutus.jpg');"></div>
+	</div>
 
+	<div class="services-container pane" id="services">
+		
+		<div class="services">
+			<div class="services-info">
+				<div class="pane-title">
+					Services
+				</div>
 
-<button class="setManeuver">Analyze Selection</button><br><br>
+				<div class="title-subtext">
+					B&S Delivery offers 5 levels of services with one that is right for your time and budget requirements
+				</div>
 
+				<div class="service-extra-note">
+				
+					Keep in mind that we can accommodate any size package or parcel - from envelopes to van loads.
 
-<div class="resultsdiv">
+					<br><br>
 
-<hr width="75%">
-<br>
-<button class="toggleFlightPath"> Toggle Flight Path</button><br><br>
-<p class="toggleFlightPath"><i>Toggle Visibility of the Flight Path</i></p> <br>
+					Whichever level you choose, you will always get optimum service at a competitive price.
 
-<button class="toggleRealCourse"> Toggle Real Course </button> <br><br>
-<p class="toggleRealCourse"><i>Toggle Visibility of the Real Course During the Selected Time</i></p> <br>
+					The following prices are based on pick-up and delivery of a standard-sized package, by car, within the same zone. There is an extra $15 fee for a minivan or stationwagon, and an extra $70 fee for a van.
+				</div>
+			</div>
 
-<button class="toggleTargetCourse"> Toggle Target Course </button><br><br>
-<p class="toggleRealCourse"><i>Toggle Visibility of the Target Course During the Selected Time</i></p> <br>
+			<div class="services-data">
+				<!-- <img class="pane-img services-img" src="/static/services.jpg"> -->
+				
+				<div class="services-list flex">
+					<div class="service card">
+						<div class="flex">
+							<div class="service-title">
+								Early Bird
+							</div>
 
-<center><h2> Results </h2></center>
-<hr width="75%">
-<br>
-<p class="results">
-</p>
+							<div class="service-price">
+								$9.95
+							</div>
+						</div>
 
-<p><i>Please Note: On Short Selections, Ground and Vertical Speed calculations may be inaccurate. </i></p>
+						<div class="service-description">
+							Orders received by 11:00am will be delivered by the end of the business day
+						</div>
+					</div>
 
-</div>
+					<div class="service card">
+						<div class="flex">
+							<div class="service-title">
+								5 Hour
+							</div>
 
-</center>
-</div>
-<div id="cesiumContainer"></div>
-<script src="flightviewer/main.js"></script>
-</div>
+							<div class="service-price">
+								$11.95
+							</div>
+						</div>
+
+						<div class="service-description">
+							Orders received by 1pm will be delivered by the end of the business day
+						</div>
+					</div>
+
+					<div class="service card">
+						<div class="flex">
+							<div class="service-title">
+								Rush
+							</div>
+
+							<div class="service-price">
+								$14.70
+							</div>
+						</div>
+
+						<div class="service-description">
+							Delivered in 3 hours or less
+						</div>
+					</div>
+
+					<div class="service card">
+						<div class="flex">
+							<div class="service-title">
+								Direct
+							</div>
+
+							<div class="service-price">
+								$25.20
+							</div>
+						</div>
+
+						<div class="service-description">
+							Delivered in 90 minutes or less
+						</div>
+					</div>
+
+					<div class="service card">
+						<div class="flex">
+							<div class="service-title">
+								Door-to-door
+							</div>
+
+							<div class="service-price">
+								1.5x Direct Price
+							</div>
+						</div>
+
+						<div class="service-description">
+							Our fastest service (no stops between pick-up and delivery)
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	</div>
+
+	<div class="order-online pane" id="order-online">
+
+		<div class="pane-title">
+			Order Online
+		</div>
+
+		<div class="pane-body">
+
+			As part of our commitment to better service, B&S now offers an online ordering system that will also allow you to track your orders.
+
+			<a href="http://www.dwaybill.com/BNSDelivery">
+				Existing customers may login or download the client by clicking here.
+			</a>
+
+			You're now ready to place an order. In the DigitalWayBill program:
+
+			Go to 'New Pick Up' or 'New Delivery' (see icons) and complete the information
+			Go to 'Print' to output your three-part waybill
+
+			Go to 'Order History' to track your orders.
+
+			That's all there is to it.
+
+			Of course, if you have any questions feel free to give us a call at any time during regular business hours.
+
+			Better Service, Guaranteed.
+
+		</div>
+	</div>
+
+	<div class="contact-us pane" id="contact">
+		<div class="pane-title">
+			Contact Us
+		</div>
+
+		<div class="contact-us-content-container pane-body flex">
+
+			<div class="contact-us-content card">
+				<div class="contact-title">
+					Dispatch				
+				</div>
+				
+				<div class="contact-method">
+					<a href="tel:416-785-8686">(416) 785-8686</a>
+				</div>
+			</div>
+
+			<div class="contact-us-content card">
+				<div class="contact-title">
+					Toll-Free					
+				</div>
+				
+				<div class="contact-method">
+					<a href="tel:1-866-785-8686">1-866-785-8686</a> <br>(US and Canadian out-of-town customers)
+				</div>
+			</div>
+
+			<div class="contact-us-content card">
+				<div class="contact-title">
+					Fax
+				</div>
+				
+				<div class="contact-method">
+					<a href="tel:416-785-5757">(416) 785-5757</a>
+				</div>
+			</div>
+
+			<div class="contact-us-content card">
+				<div class="contact-title">
+					E-mail					
+				</div>
+				
+				<div class="contact-method">
+					<a href="mailto:info@bnsdelivery.com">info@bnsdelivery.com</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="/index.js"></script>
+
+	<div class="footer">
+		
+	</div>
 </body>
 </html>

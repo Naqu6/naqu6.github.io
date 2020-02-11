@@ -1,0 +1,278 @@
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+	margin: 0;
+}
+
+.site-title {
+	cursor: default;
+	transition: 0.05s;
+	user-select: none;
+}
+
+.site-title:hover {
+	color: rgb(10, 10, 10);
+}
+
+.header {
+	font-family: 'Montserrat', sans-serif;
+
+	display: flex;
+	font-size: 16px;
+	padding: 16px;
+}
+
+.site-title {
+	flex-grow: 1;
+}
+
+.site-links > a {
+	text-decoration: none;
+	margin: 5px;
+	padding: 2.5px;
+
+	transition: 0.2s;
+	color: rgb(75, 75, 75);
+}
+
+.site-links > a:hover {
+	color: black;
+}
+
+.landing {
+	background-image: url("/static/landing.jpg");
+	width: 100%;
+	height: 750px;
+	
+	background-attachment: fixed;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.pane-title {
+	font-family: 'Montserrat', sans-serif;
+	font-size: 24px;
+}
+
+.pane-content {
+	margin-right: 35px;
+	flex-grow: 5;
+}
+
+.pane-body {
+	font-family: 'Open Sans', sans-serif;
+	line-height: 1.75;
+}
+
+.pane {
+	margin: 35px;
+	padding: 35px;
+}
+
+.flex {
+	display: flex;
+}
+
+.pane-img {
+	width: 150%;
+	background
+}
+
+.card {
+	padding: 15px;
+	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+	transition: 0.3s;
+}
+
+.about-us-image {
+	background-size: cover;
+}
+
+.card:hover {
+	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+
+.service.card {
+	width: 250px;
+	margin: 15px;
+
+	font-family: 'Montserrat', sans-serif;
+}
+
+.services-list {
+	flex-wrap: wrap;
+}
+
+.title-subtext {
+    color: grey;
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+}
+
+.service-title {
+	flex-grow: 1;
+	margin-right: 5px;
+}
+
+.service-description {
+	font-size: 12px;
+}
+
+.contact-us-content {
+	margin: 5px;
+}
+
+
+.pane-img {
+	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+	transition: 0.3s;
+}
+
+.pane-img:hover {
+	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+
+.service-extra-note {
+	font-family: "Open Sans", sans-serif;
+	font-size: 12px;
+}
+
+.services-info {
+	margin-bottom: 15px;
+}
+
+.service-extra-note {
+	margin-top: 10px;
+}
+
+.landing-card {
+	color: white;
+	font-family: "Montserrat", sans-serif;
+
+	margin: 50px auto;
+	padding: 50px 150px;
+
+	background-color: rgba(50, 50, 50, 0.5);
+	cursor: default;
+
+	user-select: none;
+}
+
+.landing-card-title {
+	font-size: 36px;
+}
+
+.landing-card-subtitle {
+	font-size: 24px;
+	color: rgb(225, 225, 225);
+}
+
+.regions-served {
+	display: flex;
+	flex-wrap: wrap;
+	max-width: 370px;
+}
+
+.region {
+	margin: 2.5px;
+	padding: 2.5px;
+	cursor: default;
+	transition: 0.1s;
+}
+
+.region:hover {
+	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+
+.landing-content {
+	margin-top: 25px;
+}
+
+.landing-content-title {
+	width: 370px;
+	margin-bottom: 5px;
+}
+
+.regions-served {
+	justify-content: center;
+}
+
+.about-us, .services-data  {
+	display: flex;
+}
+
+img {
+	object-fit: cover;
+}
+
+
+.contact-us-content-container {
+	flex-wrap: wrap;
+}
+
+.services-img  {
+	width: 25%;
+	min-height: 175px;
+	background-size: cover;
+}
+
+@media (max-width: 1100px) {
+	img {
+		margin-top: 15px;
+		width: 100%;
+	}
+
+	.pane-content {
+		margin-right: 0;
+	}
+
+	.about-us, .services-data  {
+		display: block !important;
+	}
+
+	.landing {
+
+	}
+
+	.services-img {
+		display: none;
+	}
+}
+
+@media (max-width: 1100px) {
+	.services-list {
+		display: block !important;
+	}
+
+	div.service.card {
+		width: 100%;
+	}
+
+	div.card.service, div.card.contact-us-content {
+
+	}
+
+	div.contact-us-content-container {
+		display: block !important;
+	}
+
+	.landing-card {
+		padding: 25px 75px;
+	}
+}
+
+@media (max-width: 575px) {
+	.services-link {
+		display: none;
+	}
+
+	.order-online-link {
+		display: none;
+	}
+}
